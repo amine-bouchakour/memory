@@ -11,7 +11,7 @@ class User{
     public $pasword="";
     public $connexion="";
     
-
+ 
 
     public function inscription($login,$password){
         
