@@ -147,7 +147,7 @@ while ($n<=10){
     while($j<count($resultatlevel1)){
         $pts=$level/$resultatlevel1[$j][1];
         $ptstotal=$pts*$level*10;
-        $ptstotal = number_format($ptstotal,2);
+        $ptstotal = number_format($ptstotal,1);
         echo '<tr><td>'.'N°'.$n.'</td><td>'.'<b>'.$resultatlevel1[$j][0].'</b>'.'</td><td><b>'.$resultatlevel1[$j][1].'</b> secondes -------- <b> '.$ptstotal.'</b> pts '.'</td></tr>';
         ++$j;
         ++$n;
@@ -229,7 +229,7 @@ while ($n<=10){
     while($k<count($resultatlevel2)){
         $pts=$levelbis/$resultatlevel2[$k][1];
         $ptstotal=$pts*$levelbis*10;
-        $ptstotal = number_format($ptstotal,2);
+        $ptstotal = number_format($ptstotal,1);
         echo '<tr><td>'.'N°'.$n.'</td><td><b>'.$resultatlevel2[$k][0].'</b></td><td><b>'.$resultatlevel2[$k][1].'</b> coups -------------- <b>'.$ptstotal.'</b> pts '.'</td></tr>';
         ++$k;
         ++$n;
@@ -303,7 +303,7 @@ while ($n<=10){
     // $resultatlevel3[0][1];//points
     while($l<count($resultatlevel3)){
         $ptstotal=$resultatlevel3[$l][1];
-        $ptstotal = number_format($ptstotal,2);
+        $ptstotal = number_format($ptstotal,1);
         echo '<tr><td>'.'N°'.$n.'</td><td><b>'.$resultatlevel3[$l][0].'</b></td><td><b>'.$ptstotal.'</b> pts '.'</td></tr>';
         ++$l;
         ++$n;
