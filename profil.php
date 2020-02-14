@@ -78,12 +78,18 @@ $levelbis=5;
 $connexion=mysqli_connect('localhost','root','','memory');
 
 // REQUETE POINTS BESTTIME
-$requete1="SELECT points FROM besttime WHERE level='".$levelbis."' and login='".$_SESSION['login']."' ORDER BY points DESC";
+$requete1="SELECT points,utilise FROM besttime WHERE level='".$levelbis."' and login='".$_SESSION['login']."' ORDER BY points DESC";
 $query=mysqli_query($connexion,$requete1);
 $resultatlevel1=mysqli_fetch_all($query);
 $m=0;
 $ptstime=0;
+echo ($requete2);
 if(!empty($resultatlevel1)){
+    $utilise='oui';
+$connexion=mysqli_connect('localhost','root','','memory');
+$requete2="UPDATE besttime SET utilise='".$utilise."' WHERE login='".$_SESSION['login']."' and  level='".$levelbis."'";
+$query2=mysqli_query($connexion,$requete2);
+echo ($requete2).'<br/>';
     while($m<count($resultatlevel1)){
         $ptstime=$ptstime+$resultatlevel1[$m][0];
         ++$m;
@@ -100,6 +106,9 @@ $query1=mysqli_query($connexion,$requete1);
 $resultatlevel2=mysqli_fetch_all($query1);
 $p=0;
 if(!empty($resultatlevel2)){
+    $connexion=mysqli_connect('localhost','root','','memory');
+    $requete2="UPDATE besttentative SET utilise='".$utilise."' WHERE login='".$_SESSION['login']."' and  level='".$levelbis."'";
+    $query2=mysqli_query($connexion,$requete2);
     while($p<count($resultatlevel2)){
         $ptstentative=$ptstentative=$resultatlevel1[$p][0];
         ++$p;
@@ -117,14 +126,13 @@ if(isset($ptstentative) and isset($ptstime)){
     $requete0="SELECT points FROM bestscore WHERE login='".$_SESSION['login']."'";
     $query0=mysqli_query($connexion,$requete0);
     $resultat0=mysqli_fetch_all($query0);
-    echo $resultat0[0][0];
+
+    echo 'Résultat tableau BESTSCORE : '.$resultat0[0][0].'<br/>';
     $ptstotalstocké=$resultat0[0][0];
     $ptstotal=$ptstotal+$ptstotalstocké;
-    
-    $requete="UPDATE bestscore SET points='".$ptstotal."' WHERE login='".$_SESSION['login']."' ";
-    $query=mysqli_query($requete);
-    echo ($requete);
 
+    $requete="UPDATE bestscore SET points='".$ptstotal."' WHERE login='".$_SESSION['login']."' and level='".$levelbis."' ";
+    $query=mysqli_query($connexion,$requete);
 }
 
 echo 'Points time : '.$ptstime.'<br/>';
