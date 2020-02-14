@@ -83,8 +83,7 @@ $query=mysqli_query($connexion,$requete1);
 $resultatlevel1=mysqli_fetch_all($query);
 $m=0;
 $ptstime=0;
-echo ($requete2);
-if(!empty($resultatlevel1)){
+if(!empty($resultatlevel1 and $resultatlevel1[0][1]!='oui')){
     $utilise='oui';
 $connexion=mysqli_connect('localhost','root','','memory');
 $requete2="UPDATE besttime SET utilise='".$utilise."' WHERE login='".$_SESSION['login']."' and  level='".$levelbis."'";
@@ -101,11 +100,13 @@ else{
 
 
 // REQUETE POINTS BESTTENTATIVE
-$requete1="SELECT points FROM besttentative WHERE level='".$levelbis."' and login='".$_SESSION['login']."' ORDER BY points DESC";
+$requete1="SELECT points,utilise FROM besttentative WHERE level='".$levelbis."' and login='".$_SESSION['login']."' ORDER BY points DESC";
 $query1=mysqli_query($connexion,$requete1);
 $resultatlevel2=mysqli_fetch_all($query1);
 $p=0;
-if(!empty($resultatlevel2)){
+
+if(!empty($resultatlevel2) and $resultatlevel2[0][1]!='oui'){
+    $utilise='oui';
     $connexion=mysqli_connect('localhost','root','','memory');
     $requete2="UPDATE besttentative SET utilise='".$utilise."' WHERE login='".$_SESSION['login']."' and  level='".$levelbis."'";
     $query2=mysqli_query($connexion,$requete2);
@@ -120,7 +121,7 @@ else{
 }
 
 // BESTTENTATIVE + BESTTIME POUR TABLEAU SCORETOTAL
-if(isset($ptstentative) and isset($ptstime)){
+// if(isset($ptstentative) and isset($ptstime)){
     $ptstotal=$ptstime+$ptstentative;
     $connexion=mysqli_connect("Localhost",'root','','memory');
     $requete0="SELECT points FROM bestscore WHERE login='".$_SESSION['login']."'";
@@ -133,7 +134,7 @@ if(isset($ptstentative) and isset($ptstime)){
 
     $requete="UPDATE bestscore SET points='".$ptstotal."' WHERE login='".$_SESSION['login']."' and level='".$levelbis."' ";
     $query=mysqli_query($connexion,$requete);
-}
+// }
 
 echo 'Points time : '.$ptstime.'<br/>';
 echo 'Points tentative '.$ptstentative.'<br/>';
@@ -141,14 +142,13 @@ echo 'Points Totals : '.$ptstotal.'<br/>';
 
 
 
-++$n;
+$n=0;
 $k=0;
 while ($n<=10){    
 // $resultatlevel2[0][0];//Login
 // $resultatlevel2[0][1];//tentative
 // $resultatlevel2[0][2];//points
 while($k<count($resultatlevel2)){
-    $ptstotal = number_format($ptstotal,1);
     // echo '<tr><td>'.'N°'.$n.'</td><td><b>'.$resultatlevel2[$k].'</b></td><td><b>'.$resultatlevel2[$k].'</b> coups -------------- <b>'.$ptstotal.'</b> pts '.'</td></tr>';
     ++$k;
     ++$n;
