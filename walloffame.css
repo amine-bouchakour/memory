@@ -21,7 +21,7 @@ table,tr,td{
 }
 
 table{
-    margin:auto;
+    margin: 100px auto 0px;
 }
 
 /* MENU DEROULANT CLASSEMENT NIVEAU */
