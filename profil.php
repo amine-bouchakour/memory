@@ -77,7 +77,7 @@ if(isset($_GET['tab'])){
     }
     else{
         $level=1;
-    }
+    } 
 $connexion=mysqli_connect('localhost','root','','memory');
 $requete="SELECT login,points FROM besttime WHERE level='".$level."' and login='".$_SESSION['login']."' ORDER BY points DESC";
 $query=mysqli_query($connexion,$requete);
