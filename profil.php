@@ -30,126 +30,70 @@ if(isset($_SESSION['login']) and isset($_SESSION['id'])){
 
 $n=1;
 ?> <table>
-    <th>TOP 10</th>
-    <th>---VOS PARTIES---</th>
+    <th>TOP</th>
+    <th>-- VOS 5 MEILLEURS PARTIES --</th>
     <th>
         <ul id="menu-accordeon">
-            <li><a href="#"><?php if(!isset($levelbis)){ echo 'Level';}else{echo 'Level '.$_GET['levelbis'];} ?></a>
+            <li><a href="#"><?php if(!isset($_GET['levelbis'])){ echo 'Level 1';} else{echo 'Level '.$_GET['levelbis'];} ?></a>
                 <ul>
                     <li><a
-                            href="profil.php?tab=1&amp;type=time&amp;level=<?php if(isset($_GET['level'])){ echo urlencode($_GET['level']);} ?>&amp;tabbis=2&amp;typebis=tentative&amp;levelbis=1&amp;tabbis2=3&amp;typebis2=bestscore&amp;levelbis2=<?php if(isset($levelbis2)){ echo urlencode($levelbis2); }?>">Level
+                            href="profil.php?tab=1&amp;type=time&amp;level=1">Level
                             1</a></li>
                     <li><a
-                            href="profil.php?tab=1&amp;type=time&amp;level=<?php if(isset($_GET['level'])){ echo urlencode($_GET['level']);} ?>&amp;tabbis=2&amp;typebis=tentative&amp;levelbis=2&amp;tabbis2=3&amp;typebis2=bestscore&amp;levelbis2=<?php if(isset($levelbis2)){ echo urlencode($levelbis2); }?>">Level
+                            href="profil.php?tab=1&amp;type=time&amp;level=2">Level
                             2</a></li>
                     <li><a
-                            href="profil.php?tab=1&amp;type=time&amp;level=<?php if(isset($_GET['level'])){ echo urlencode($_GET['level']);} ?>&amp;tabbis=2&amp;typebis=tentative&amp;levelbis=3&amp;tabbis2=3&amp;typebis2=bestscore&amp;levelbis2=<?php if(isset($levelbis2)){ echo urlencode($levelbis2); }?>">Level
+                            href="profil.php?tab=1&amp;type=time&amp;level=3">Level
                             3</a></li>
                     <li><a
-                            href="profil.php?tab=1&amp;type=time&amp;level=<?php if(isset($_GET['level'])){ echo urlencode($_GET['level']);} ?>&amp;tabbis=2&amp;typebis=tentative&amp;levelbis=4&amp;tabbis2=3&amp;typebis2=bestscore&amp;levelbis2=<?php if(isset($levelbis2)){ echo urlencode($levelbis2); }?>">Level
+                            href="profil.php?tab=1&amp;type=time&amp;level=4">Level
                             4</a></li>
                     <li><a
-                            href="profil.php?tab=1&amp;type=time&amp;level=<?php if(isset($_GET['level'])){ echo urlencode($_GET['level']);} ?>&amp;tabbis=2&amp;typebis=tentative&amp;levelbis=5&amp;tabbis2=3&amp;typebis2=bestscore&amp;levelbis2=<?php if(isset($levelbis2)){ echo urlencode($levelbis2); }?>">Level
+                            href="profil.php?tab=1&amp;type=time&amp;level=5">Level
                             5</a></li>
                 </ul>
             </li>
     </th>
-    <?php
+    <?php ?>
+<?php
 
-if(isset($_GET['tabbis'])){
+if(isset($_GET['tab'])){
 
-if($_GET['tabbis']=='2' and $_GET['typebis']=="tentative" and $_GET['levelbis']==1){
-$levelbis=1;
-}
-if($_GET['tabbis']=='2' and $_GET['typebis']=="tentative" and $_GET['levelbis']==2){
-$levelbis=2;
-}
-if($_GET['tabbis']=='2' and $_GET['typebis']=="tentative" and $_GET['levelbis']==3){
-$levelbis=3;
-}
-if($_GET['tabbis']=='2' and $_GET['typebis']=="tentative" and $_GET['levelbis']==4){
-$levelbis=4;
-}
-if($_GET['tabbis']=='2' and $_GET['typebis']=="tentative" and $_GET['levelbis']==5){
-$levelbis=5;
-}
-}
-
-$connexion=mysqli_connect('localhost','root','','memory');
-
-// REQUETE POINTS BESTTIME
-$requete1="SELECT points,utilise FROM besttime WHERE level='".$levelbis."' and login='".$_SESSION['login']."' ORDER BY points DESC";
-$query=mysqli_query($connexion,$requete1);
-$resultatlevel1=mysqli_fetch_all($query);
-$m=0;
-$ptstime=0;
-if(!empty($resultatlevel1 and $resultatlevel1[0][1]!='oui')){
-    $utilise='oui';
-$connexion=mysqli_connect('localhost','root','','memory');
-$requete2="UPDATE besttime SET utilise='".$utilise."' WHERE login='".$_SESSION['login']."' and  level='".$levelbis."'";
-$query2=mysqli_query($connexion,$requete2);
-echo ($requete2).'<br/>';
-    while($m<count($resultatlevel1)){
-        $ptstime=$ptstime+$resultatlevel1[$m][0];
-        ++$m;
+    if($_GET['tab']=='1' and $_GET['type']=="time" and $_GET['level']==1){
+        $level=1;
     }
-}
-else{
-    $ptstime=0;
-}
-
-
-// REQUETE POINTS BESTTENTATIVE
-$requete1="SELECT points,utilise FROM besttentative WHERE level='".$levelbis."' and login='".$_SESSION['login']."' ORDER BY points DESC";
-$query1=mysqli_query($connexion,$requete1);
-$resultatlevel2=mysqli_fetch_all($query1);
-$p=0;
-
-if(!empty($resultatlevel2) and $resultatlevel2[0][1]!='oui'){
-    $utilise='oui';
-    $connexion=mysqli_connect('localhost','root','','memory');
-    $requete2="UPDATE besttentative SET utilise='".$utilise."' WHERE login='".$_SESSION['login']."' and  level='".$levelbis."'";
-    $query2=mysqli_query($connexion,$requete2);
-    while($p<count($resultatlevel2)){
-        $ptstentative=$ptstentative=$resultatlevel1[$p][0];
-        ++$p;
+    if($_GET['tab']=='1' and $_GET['type']=="time" and $_GET['level']==2){
+        $level=2;
     }
-    $ptstentative=$resultatlevel2[0][0];
-}
-else{
-    $ptstentative=0;
-}
+    if($_GET['tab']=='1' and $_GET['type']=="time" and $_GET['level']==3){
+        $level=3;
+    }
+    if($_GET['tab']=='1' and $_GET['type']=="time" and $_GET['level']==4){
+        $level=4;
+    }
+    if($_GET['tab']=='1' and $_GET['type']=="time" and $_GET['level']==5){
+        $level=5;
+    }
+    }
+    else{
+        $level=1;
+    }
+$connexion=mysqli_connect('localhost','root','','memory');
+$requete="SELECT login,points FROM besttime WHERE level='".$level."' and login='".$_SESSION['login']."' ORDER BY points DESC";
+$query=mysqli_query($connexion,$requete);
+$resultatlevel2=mysqli_fetch_all($query);
+var_dump($resultatlevel2);
+echo $level.'<br/>';
 
-// BESTTENTATIVE + BESTTIME POUR TABLEAU SCORETOTAL
-// if(isset($ptstentative) and isset($ptstime)){
-    $ptstotal=$ptstime+$ptstentative;
-    $connexion=mysqli_connect("Localhost",'root','','memory');
-    $requete0="SELECT points FROM bestscore WHERE login='".$_SESSION['login']."'";
-    $query0=mysqli_query($connexion,$requete0);
-    $resultat0=mysqli_fetch_all($query0);
+// TABLEAU VOS PARTIES 
 
-    echo 'Résultat tableau BESTSCORE : '.$resultat0[0][0].'<br/>';
-    $ptstotalstocké=$resultat0[0][0];
-    $ptstotal=$ptstotal+$ptstotalstocké;
-
-    $requete="UPDATE bestscore SET points='".$ptstotal."' WHERE login='".$_SESSION['login']."' and level='".$levelbis."' ";
-    $query=mysqli_query($connexion,$requete);
-// }
-
-echo 'Points time : '.$ptstime.'<br/>';
-echo 'Points tentative '.$ptstentative.'<br/>';
-echo 'Points Totals : '.$ptstotal.'<br/>';
-
-
-
-$n=0;
+$n=1;
 $k=0;
-while ($n<=10){    
+while ($n<=5){    
 // $resultatlevel2[0][0];//Login
-// $resultatlevel2[0][1];//tentative
-// $resultatlevel2[0][2];//points
+// $resultatlevel2[0][1];//points
 while($k<count($resultatlevel2)){
-    // echo '<tr><td>'.'N°'.$n.'</td><td><b>'.$resultatlevel2[$k].'</b></td><td><b>'.$resultatlevel2[$k].'</b> coups -------------- <b>'.$ptstotal.'</b> pts '.'</td></tr>';
+    echo '<tr><td>'.'N°'.$n.'</td><td><b> '.$resultatlevel2[0][0].' --$défi $temps/$coups $date--</b></td><td><b>'.$resultatlevel2[$k][1].'</b> pts '.'</td></tr>';
     ++$k;
     ++$n;
 }
