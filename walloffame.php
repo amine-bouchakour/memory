@@ -232,6 +232,9 @@ while ($n<=10){
             }
 
         echo '<br/>';
+        if($temps==0){
+            $temps=1;
+        }
         
         echo 'calcul temps moyen ='.$temps.'/'.$nb_partiejoueur.'<br/>';
         $temps=$temps/$nb_partiejoueur;
@@ -250,8 +253,9 @@ while ($n<=10){
         
         $pts=$resultat2[$j][1];
         $ptstotal=$pts+$resultat2[$j][1];
-        $ptstotals=$ptstotal/$nb_partiejoueur;
-        $ptstotals = number_format($ptstotal,1);
+        $points = number_format($points,1);
+        $temps = number_format($temps,1);
+
         echo '<tr><td>'.'N°'.$n.'</td><td>'.'<b>'.$resultat2[$j][0].'</b>'.'</td><td><b>'.$temps.'</b> secondes ------- <b> '.$points.'</b> pts '.'</td></tr>';
         ++$j;
         ++$n;
@@ -263,7 +267,7 @@ while ($n<=10){
     }
 }
     echo 'Login = '.$login.'<br/>';
-    echo 'PTS BESTIME + BESTTENTATIVE = '.$ptstotals.'<br/>';
+    echo 'PTS BESTIME + BESTTENTATIVE = '.$points.'<br/>';
     echo 'Nb partie du joueur par level = '.$nb_partiejoueur.'<br/>';
     echo 'Nb partie total par level = '.$nb_partielevel.'<br/>';
 
