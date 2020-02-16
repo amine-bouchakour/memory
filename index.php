@@ -107,6 +107,7 @@ class tabcarte
       $_SESSION['level']=$score['niv']=$this->nbfam; // level
       $_SESSION['nb_tentative']=$score['tentative']=$this->nbtentative; // nb-tentative
       
+      echo $_SESSION['defi'].'<br/>';
 
       if($_SESSION['temps']!=0 and $_SESSION['nb_tentative']!=0){
 
@@ -118,18 +119,36 @@ class tabcarte
           // CALCUL TOTAL POINTS DEFI SANS FAUTE
           $pointstentative=(1/$_SESSION['nb_tentative'])*10*$_SESSION['level'];
           $_SESSION['pointstentative']=$pointstentative;
+
+          $connexion=mysqli_connect('localhost',"root","","memory");
+          $requete0="SELECT id FROM utilisateurs WHERE login='".$_SESSION['login']."'";
+          $query0=mysqli_query($connexion,$requete0);
+          $resultat0=mysqli_fetch_all($query0);
+
+          echo ($requete0).'<br/>';
+          echo $resultat0[0][0].'<br/>';
+          $_SESSION['id_utilisateur']=$resultat0[0][0];
+
     
           if($_SESSION['defi']=='Chrono' and isset($_SESSION['login'])){
-            $connexion=mysqli_connect('localhost',"root","","memory");
-            $requete="INSERT INTO besttime (login,temps,points,level,defi,utilise,id_utilisateur) VALUES ('".$_SESSION['login']."','".$_SESSION['temps']."','".$_SESSION['pointstime']."','".$_SESSION['level']."','".$_SESSION['defi']."','oui','10') ";
+
+          $_SESSION['pointstime']= number_format($_SESSION['pointstime'],1);
+          ceil($_SESSION['pointstime']);
+
+
+            $requete="INSERT INTO besttime (login,temps,points,level,defi,utilise,id_utilisateur) VALUES ('".$_SESSION['login']."','".$_SESSION['temps']."','".$_SESSION['pointstime']."','".$_SESSION['level']."','".$_SESSION['defi']."','oui','".$_SESSION['id_utilisateur']."') ";
             $query=mysqli_query($connexion,$requete);
             echo ($requete).'<br/>';
   
   
           }
           if($_SESSION['defi']=='Sans faute' and isset($_SESSION['login'])){
+
+            $_SESSION['pointstentative']= number_format($_SESSION['pointstentative'],1);
+            ceil($_SESSION['pointstentative']);
+
             $connexion=mysqli_connect('localhost',"root","","memory");
-            $requete1="INSERT INTO besttentative (login,nb_tentative,points,level,defi,utilise,id_utilisateur) VALUES ('".$_SESSION['login']."','".$_SESSION['nb_tentative']."','".$_SESSION['pointstentative']."','".$_SESSION['level']."','".$_SESSION['defi']."','oui','10') ";
+            $requete1="INSERT INTO besttentative (login,nb_tentative,points,level,defi,utilise,id_utilisateur) VALUES ('".$_SESSION['login']."','".$_SESSION['nb_tentative']."','".$_SESSION['pointstentative']."','".$_SESSION['level']."','".$_SESSION['defi']."','oui','".$_SESSION['id_utilisateur']."') ";
             $query1=mysqli_query($connexion,$requete1);
             echo ($requete1).'<br/>';
   

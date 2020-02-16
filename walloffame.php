@@ -21,9 +21,10 @@ class score{
         if(isset($défi) and isset($level) and isset($nb_cout) and isset($temps)){
 
             $connexion=mysqli_connect("Localhost","root","","memory");
-            $requete2="SELECT * FROM utilisateur WHERE login='amine'";
+            $requete2="SELECT * FROM utilisateur ";
             $query=mysqli_query($connexion,$requete2);
             $resultat=mysqli_fetch_all($query);
+            $resultat[0];
             var_dump($resultat);
 
             session_start();
@@ -74,7 +75,7 @@ if(isset($_POST['valider'])){
 
 
 
-// <!-- TEST PRINCIPALE TIME -->
+// <!-- TEST " CHRONO " -->
 
 if(isset($_GET['levelbis'])){
 if(!isset($levelbis)){
@@ -150,17 +151,13 @@ else{
     $level=1;
     }
 
-
-// TOUTE PARTIE DU JOUEUR SELON LEVEL pour calcul moyenne
-$connexion=mysqli_connect('localhost','root','','memory');
-
     
 // TOUTE PARTIE SELON LEVEL
-$requete="SELECT login,temps,points FROM besttime WHERE level='".$level."' ORDER BY points DESC";
+$connexion=mysqli_connect('localhost','root','','memory');
+$requete="SELECT login,temps,points,id_utilisateur FROM besttime WHERE level='".$level."' ORDER BY points DESC";
 $query=mysqli_query($connexion,$requete);
 $resultat2=mysqli_fetch_all($query);
 var_dump($resultat2);
-
 
 if(!empty($resultat2)){
     $nb_partielevel=count($resultat2);
@@ -178,39 +175,31 @@ while ($n<=10){
     $ptstotal=0;
     
     while($j<$nb_partielevel  and $n<=10){
-        // if($resultat2[$j][1]==0){
-        //     $resultat2[$j][1]=1;
-        // }
         $login=$resultat2[$j][0];
+
 
         $points=$resultat2[$j][2];
         $pointstotals=$points+$points;
         $points=0;
         echo 'Login = '.$login.'<br/>';
 
-
         // ADDITION DE TOUTE LES PARTIE DU MEME JOUEUR ET MEME LEVEL points
         $l=0;
         while($l<$nb_partielevel  and $n<=10){
             if($login==$resultat2[$l][0]){
+        $id_utilisateur=$resultat2[$l][3];//id_utiiisateur
 
-                echo 'Points DANS boucle avant '.$points.'<br/>';
+                // echo 'Points DANS boucle avant '.$points.'<br/>';
                 $points=$points+$resultat2[$l++][2];
                 echo 'Points DANS boucle apres '.$points.'<br/>';
-
             }
             else{
                 ++$l;
             }
-
         }
 
-        echo '<br/>';
-
         $temps=0;
-
-
-        $requete1="SELECT login,temps,points FROM besttime WHERE level='".$level."' and login='".$login."' ORDER BY points DESC";
+        $requete1="SELECT login,temps,points,id_utilisateur FROM besttime WHERE level='".$level."' and id_utilisateur='".$id_utilisateur."' ORDER BY points DESC";
         $query1=mysqli_query($connexion,$requete1);
         $resultat1=mysqli_fetch_all($query1);
             
@@ -221,65 +210,59 @@ while ($n<=10){
         else{
             $nb_partiejoueur=1;
             }
-        
             // ADDITION DE TOUTE LES PARTIE DU MEME JOUEUR ET MEME LEVEL temps
-
             $r=0;
-            while($r<$nb_partiejoueur){
+            while($r<$nb_partiejoueur ){
                 if($login==$resultat2[$r][0]){
-    
-                    echo 'temps DANS boucle avant = '.$temps.'<br/>';
+                    // echo 'temps DANS boucle avant = '.$temps.'<br/>';
                     $temps=$temps+$resultat2[$r++][1];
                     echo 'temps DANS boucle apres = '.$temps.'<br/>';
-    
                 }
                 else{
                     ++$r;
                 }
-
             }
+            echo '<br/>';
 
-        echo '<br/>';
         if($temps==0){
             $temps=1;
         }
         
         echo 'calcul temps moyen ='.$temps.'/'.$nb_partiejoueur.'<br/>';
         $temps=$temps/$nb_partiejoueur;
-        echo 'Temps moyenne = '.$temps.'<br/>';
-
+        echo 'Temps moyenne = '.$temps.' secondes'.'<br/>';
         
         echo 'calcul points moyen ='.$points.'/'.$nb_partiejoueur.'<br/>';
         $points=$points/$nb_partiejoueur;
-        echo 'Points moyen = '.$points.'<br/>';
+        echo 'Points moyen = '.$points.' points'.'<br/>'.'<br/>';
 
-        echo 'Points TOTAL bestime  personnel '.$points.' pts<br/>'.'<br/>';
-
-        
-        echo '<br/>';
-
+        // echo 'Points TOTAL bestime  personnel '.$points.' pts<br/>'.'<br/>';
         
         $points = number_format($points,1);
         $temps = number_format($temps,1);
 
+        echo $temps.'<br/>';
+
+        // echo 'TEMPS AVANT CALCUL = '.$temps.'<br/>';
+        //    echo 'TEMPS APRES CALCUL = '.$temps.'<br/>';
 
         echo '<tr><td>'.'N°'.$n.'</td><td>'.'<b>'.ucfirst($resultat2[$j][0]).'</b>'.'</td><td><b>'.$temps.'</b> secondes ------- <b> '.$points.'</b> pts '.'</td></tr>';
         ++$j;
         ++$n;
-
-        
     }
 
     if($j==count($resultat2)){
         echo '<tr><td>'.'N°'.$n.'</td><td>'.'$login'.'</td><td>'.'$points'.'</td></tr>';
         ++$n;
-        
     }
+
 }
-    echo 'Login = '.$login.'<br/>';
-    echo 'PTS BESTIME + BESTTENTATIVE = '.$points.'<br/>';
-    echo 'Nb partie du joueur par level = '.$nb_partiejoueur.'<br/>';
-    echo 'Nb partie total par level = '.$nb_partielevel.'<br/>';
+
+
+    // echo 'Login = '.$login.'<br/>';
+    // echo 'PTS BESTIME + BESTTENTATIVE = '.$points.'<br/>';
+    // echo 'Nb partie du joueur par level = '.$nb_partiejoueur.'<br/>';
+    // echo 'Nb partie total par level = '.$nb_partielevel.'<br/>';
 
     ?>
     </table>
@@ -290,7 +273,7 @@ while ($n<=10){
 
 
     <br>
-    <!-- TEST PRINCIPALE TENTATIVE -->
+<!-- TEST PRINCIPALE  " SANS-FAUTE "  -->
     <?php
 
 $n=1;
@@ -350,7 +333,7 @@ else{
     $requete1="SELECT login,nb_tentative,points FROM besttentative WHERE level='".$levelbis."' ORDER BY points DESC";
     $query1=mysqli_query($connexion,$requete1);
     $resultatlevel2=mysqli_fetch_all($query1);
-    var_dump($resultatlevel2);
+    // var_dump($resultatlevel2);
     $k=0;
 while ($n<=10){    
     // $resultatlevel2[0][0];//Login
@@ -430,15 +413,20 @@ else{
     $levelbis2=1;
 }
 
-if(isset($_SESSION['login'])){
+
 
 
 // REQUETE POINTS BESTTIME
 $connexion=mysqli_connect('localhost','root','','memory');
-$requete1="SELECT points,utilise FROM besttime WHERE level='".$levelbis2."' and login='".$_SESSION['login']."' ORDER BY points DESC";
+$requete1="SELECT points,utilise,id_utilisateur,login FROM besttime WHERE level='".$levelbis2."' ORDER BY points DESC";
 $query=mysqli_query($connexion,$requete1);
 $resultatlevel1=mysqli_fetch_all($query);
-echo($requete1);
+echo($requete1).'<br/>';;
+echo $resultatlevel1[0][3].'<br/>';//login
+echo $resultatlevel1[0][2].'<br/>';//id_utilisateur
+
+
+
 $m=0;
 $ptstime=0;
 if(!empty($resultatlevel1 and $resultatlevel1[0][1]!='oui')){
@@ -446,6 +434,7 @@ if(!empty($resultatlevel1 and $resultatlevel1[0][1]!='oui')){
 $connexion=mysqli_connect('localhost','root','','memory');
 $requete2="UPDATE besttime SET utilise='".$utilise."' WHERE login='".$_SESSION['login']."' and  level='".$levelbis2."'";
 $query2=mysqli_query($connexion,$requete2);
+
     while($m<count($resultatlevel1)){
         $ptstime=$ptstime+$resultatlevel1[$m][0];
         ++$m;
@@ -458,9 +447,10 @@ else{
 
 // REQUETE POINTS BESTTENTATIVE
 $connexion=mysqli_connect('localhost','root','','memory');
-$requete1="SELECT points,utilise FROM besttentative WHERE level='".$levelbis2."' and login='".$_SESSION['login']."' ORDER BY points DESC";
+$requete1="SELECT points,utilise,id_utilisateur,login FROM besttentative WHERE level='".$levelbis2."' ORDER BY points DESC";
 $query1=mysqli_query($connexion,$requete1);
 $resultatlevel2=mysqli_fetch_all($query1);
+// var_dump($resultatlevel2);
 $p=0;
 
 if(!empty($resultatlevel2) and $resultatlevel2[0][1]!='oui'){
@@ -498,7 +488,6 @@ else{
 echo 'Points time : '.$ptstime.'<br/>';
 echo 'Points tentative '.$ptstentative.'<br/>';
 echo 'Points Totals : '.$ptstotal.'<br/>';
-}
 
 
     $connexion=mysqli_connect('localhost','root','','memory');
@@ -511,7 +500,7 @@ echo 'Points Totals : '.$ptstotal.'<br/>';
 while ($n<=10){
     // $resultatlevel3[0][0];//Login
     // $resultatlevel3[0][1];//points
-    while($l<count($resultatlevel3)){
+    while($l<count($resultatlevel3) and $n<=10){
         $ptstotal=$resultatlevel3[$l][1];
         $ptstotal = number_format($ptstotal,1);
 
