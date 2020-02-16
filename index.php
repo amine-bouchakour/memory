@@ -107,7 +107,6 @@ class tabcarte
       $_SESSION['level']=$score['niv']=$this->nbfam; // level
       $_SESSION['nb_tentative']=$score['tentative']=$this->nbtentative; // nb-tentative
       
-      echo $_SESSION['temps'].'<br/>';
 
       if($_SESSION['temps']!=0 and $_SESSION['nb_tentative']!=0){
 
@@ -174,6 +173,7 @@ class tabcarte
 
 
 <?php 
+
 include('header.php');
 
 if(isset($_SESSION['gamestrart']))
@@ -184,7 +184,9 @@ if(isset($_SESSION['gamestrart']))
 	}
 	$_SESSION['jeu']->afficher();//affiche nb fammille a trouver et nb carte total
   $_SESSION['jeu']->win();
-  ?><p> Nombre d'erreur : <?php echo $_SESSION['jeu']->nbtentative; $_SESSION['nb_tentative']=$_SESSION['jeu']->nbtentative;?></p>     <!-- VARIABLE NOMBRE DE TENTATIVE A RECUPERER POUR AFFICHAGE WALL OF FAME ******************************************* -->
+  ?><p> Nombre d'erreur : <?php echo $_SESSION['jeu']->nbtentative; $_SESSION['nb_tentative']=$_SESSION['jeu']->nbtentative;
+  if($_SESSION['nb_tentative']=0){echo 'Félicitation '.$_SESSION['login'].', vous avez réussi à faire un sans faute !!'.'<br/>';}
+  ?></p>     <!-- VARIABLE NOMBRE DE TENTATIVE A RECUPERER POUR AFFICHAGE WALL OF FAME ******************************************* -->
   <a href="index.php?end=true">Ressayer</a>
   <a href="index.php?chang=true">Changer difficulter/mode de jeu</a>
 
@@ -219,7 +221,6 @@ if(isset($_POST['defi'])=='time'){
 if(isset($_POST['defi'])=='tentative'){
   $_SESSION['defi']=$_POST['defi'];
 }
-echo $_SESSION['defi'].'<br/>';
 
 
 
