@@ -27,8 +27,8 @@ class tabcarte
     	{
     		$nb=3;
     	}
-        $this-> nbfam = $nb;//nombre de famille de carte a retrouver
-        $this-> nbcar = $nb*2;//nb total de carte //crée un tab random chiffre
+        $this->nbfam = $nb;//nombre de famille de carte a retrouver
+        $this->nbcar = $nb*2;//nb total de carte //crée un tab random chiffre
         $arr=array();
 		for($i=0; $i < $this->nbfam ; $i++) 
 		{
@@ -36,7 +36,7 @@ class tabcarte
 		}
 		$arr = array_merge($arr,$arr);
 		shuffle($arr);
-		$this-> arr=$arr; //affichage du tableau       
+		$this->arr=$arr; //affichage du tableau       
         $t="<section>";
         	for ($j=0; $j < $nb*2 ; $j++)
         	{	$ch=$j;
@@ -44,7 +44,7 @@ class tabcarte
         		$t=$t."<div class=\"div-carte noturn\" ><a href=\"index.php?jouer=$ch\"><img src=\"img/retourner.png\"></a></div>";//   trouver un moyen de remplire aléatoirment le tab,utiliser un  compteur 
         	}        	
         $t=$t."</section>";
-        $this-> tabcar=$t;
+        $this->tabcar=$t;
         $_SESSION['gamestrart']=true;
         $this->temp = time();
     }
@@ -54,12 +54,12 @@ class tabcarte
   }
   public function jouer($coup)
   {	
-  	if($this-> nbtour%2==0)
+  	if($this->nbtour%2==0)
   	{
-  		$this-> stock=$coup;//modifier tabcar //crée une variable de copy du dernier tab $tabcopie
+  		$this->stock=$coup;//modifier tabcar //crée une variable de copy du dernier tab $tabcopie
   		$this->tabcopie=$this->tabcar; //quand carte retourer ne pas pouvoir jouer (sup lien )
   		$cherche = "<div class=\"div-carte noturn\" ><a href=\"index.php?jouer=$coup\"><img src=\"img/retourner.png\"></a></div>";
-		  $remplace ="<div class=\"div-carte turn\" ><img src=\"img/".$this-> arr[$coup].".png\"></div>";
+		  $remplace ="<div class=\"div-carte turn\" ><img src=\"img/".$this->arr[$coup].".png\"></div>";
 		  $this->tabcar = str_replace($cherche,$remplace,$this->tabcar);
       //mise a jour corec bug
       header("Location: index.php");
@@ -70,9 +70,9 @@ class tabcarte
   	{	
   		
   	$cherche = "<div class=\"div-carte noturn\" ><a href=\"index.php?jouer=$coup\"><img src=\"img/retourner.png\"></a></div>";
-		$remplace ="<div class=\"div-carte turn\" ><img src=\"img/".$this-> arr[$coup].".png\"></div>";
+		$remplace ="<div class=\"div-carte turn\" ><img src=\"img/".$this->arr[$coup].".png\"></div>";
 		$this->tabcar = str_replace($cherche,$remplace,$this->tabcar);
-  		if ($this-> arr[$this-> stock]==$this-> arr[$coup]) 
+  		if ($this->arr[$this->stock]==$this->arr[$coup]) 
   		{
   			 $this->cartrouve++;
           //mise a jour corec bug
@@ -80,12 +80,12 @@ class tabcarte
   		}
   		else
   		{
-  			$this-> nbtentative++;		
+  			$this->nbtentative++;		
         header('Location: index.php?chrono=t');//annuler les changement
   			
   		}  	//comparaison et modification du tableau
   	}
-  	$this-> nbtour++;
+  	$this->nbtour++;
 
   	//afficher le coup (trouver un moyen de modiffier le table tabcar ) foreach //tour doit etres un tab qui indique si 1er ou deuxieme coup si deuxiem coup valeur du premeir coup 	//empecher de piocher deux fois de suitte la meme carte
   }
@@ -106,31 +106,45 @@ class tabcarte
       $_SESSION['temps']= $score['temps']=$tempwin-$this->temp; //chrono
       $_SESSION['level']=$score['niv']=$this->nbfam; // level
       $_SESSION['nb_tentative']=$score['tentative']=$this->nbtentative; // nb-tentative
+      
+      echo $_SESSION['temps'].'<br/>';
 
-      if(isset($_POST['time'])){
-          echo 'defi time'.'<br/>';
-      }
+      if($_SESSION['temps']!=0 and $_SESSION['nb_tentative']!=0){
 
-      if(isset($_POST['defi'])){
-          echo 'défi tentative'.'<br/>';
-      }
-
-        $connexion=mysqli_connect('localhost',"root","","memory");
-        $requete="INSERT INTO besttime (login,temps,points,level,defi,utilise,id_utilisateur) VALUES ('".$_SESSION['login']."','".$_SESSION['temps']."',Null,'".$_SESSION['level']."','".$_SESSION['defi']."','oui','10') ";
-        $query=mysqli_query($connexion,$requete);
-        echo ($requete).'<br/>';
-
-        $connexion=mysqli_connect('localhost',"root","","memory");
-        $requete="INSERT INTO besttentative (login,nb_tentative,points,level,defi,utilise,id_utilisateur) VALUES ('".$_SESSION['login']."','".$_SESSION['nb_tentative']."',Null,'".$_SESSION['level']."','".$_SESSION['defi']."','oui','10') ";
-        $query=mysqli_query($connexion,$requete);
-        echo ($requete).'<br/>';
-
-     
+        // CALCUL TOTAL POINTS DEFI CHRONO
+          $pointstime=(1/$_SESSION['temps'])*10*$_SESSION['level'];
+          $_SESSION['pointstime']=$pointstime;
+    
+    
+          // CALCUL TOTAL POINTS DEFI SANS FAUTE
+          $pointstentative=(1/$_SESSION['nb_tentative'])*10*$_SESSION['level'];
+          $_SESSION['pointstentative']=$pointstentative;
+    
+          if($_SESSION['defi']=='Chrono' and isset($_SESSION['login'])){
+            $connexion=mysqli_connect('localhost',"root","","memory");
+            $requete="INSERT INTO besttime (login,temps,points,level,defi,utilise,id_utilisateur) VALUES ('".$_SESSION['login']."','".$_SESSION['temps']."','".$_SESSION['pointstime']."','".$_SESSION['level']."','".$_SESSION['defi']."','oui','10') ";
+            $query=mysqli_query($connexion,$requete);
+            echo ($requete).'<br/>';
+  
+  
+          }
+          if($_SESSION['defi']=='Sans faute' and isset($_SESSION['login'])){
+            $connexion=mysqli_connect('localhost',"root","","memory");
+            $requete1="INSERT INTO besttentative (login,nb_tentative,points,level,defi,utilise,id_utilisateur) VALUES ('".$_SESSION['login']."','".$_SESSION['nb_tentative']."','".$_SESSION['pointstentative']."','".$_SESSION['level']."','".$_SESSION['defi']."','oui','10') ";
+            $query1=mysqli_query($connexion,$requete1);
+            echo ($requete1).'<br/>';
+  
+          }
+        }
+        else{
+          $_SESSION['temps']=1;
+          $_SESSION['nb_tentative']=1;
+        }
 
       ?> 
       <h1 id="win">Winner</h1> 
       <a href="partage.php">Partager mon score</a>
-      <p><?=$score['temps']; $_SESSION['chrono']=$score['temps']; ?> secondes</p>            <!--  /* VARIABLE TEMPS A RECUPERER POUR WALL OF FAME*/k ****************************************** -->
+      <p><?=$score['temps'];  ?> secondes</p>            <!--  /* VARIABLE TEMPS A RECUPERER POUR WALL OF FAME*/k ****************************************** -->
       <?php  //lancé ajout score, nouvelle partie
     }
   }
@@ -201,11 +215,12 @@ else
 if(isset($_POST['defi'])=='time'){
     $_SESSION['defi']=$_POST['defi'];
 }
-echo $_SESSION['defi'].'<br/>';
 
 if(isset($_POST['defi'])=='tentative'){
-    $_SESSION['defi']=$_POST['defi'];
+  $_SESSION['defi']=$_POST['defi'];
 }
+echo $_SESSION['defi'].'<br/>';
+
 
 
 	

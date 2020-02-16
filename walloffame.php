@@ -60,6 +60,8 @@ echo 'Nb tentative = '.$_SESSION['nb_tentative'].' coups'.'<br/>';
 echo 'Chrono = '.$_SESSION['chrono'].' secondes'.'<br/>';
 echo 'Level = '.$_SESSION['level'].'<br/>';
 echo 'Défi = '.$_SESSION['defi'].'<br/>';
+echo 'Points besttime = '.$_SESSION['pointstime'].'<br/>';
+echo 'Points besttentative = '.$_SESSION['pointstentative'].'<br/>';
 
 
 
@@ -97,7 +99,7 @@ $n=1;
 <section class="aligntab">
     <table>
         <th>TOP 10</th>
-        <th>---TIME---</th>
+        <th>--- " CHRONO " ---</th>
         <th>
             <ul id="menu-accordeon">                
 
@@ -154,7 +156,7 @@ $connexion=mysqli_connect('localhost','root','','memory');
 
     
 // TOUTE PARTIE SELON LEVEL
-$requete="SELECT login,temps,points FROM besttime WHERE level='".$level."' ORDER BY temps DESC";
+$requete="SELECT login,temps,points FROM besttime WHERE level='".$level."' ORDER BY points DESC";
 $query=mysqli_query($connexion,$requete);
 $resultat2=mysqli_fetch_all($query);
 var_dump($resultat2);
@@ -174,35 +176,33 @@ while ($n<=10){
     // $resultatl2[0][1];//temps
     // $resultatl2[0][2];//points
     $ptstotal=0;
-    while($j<$nb_partielevel){
+    
+    while($j<$nb_partielevel  and $n<=10){
         // if($resultat2[$j][1]==0){
         //     $resultat2[$j][1]=1;
         // }
-
-
-
         $login=$resultat2[$j][0];
-
 
         $points=$resultat2[$j][2];
         $pointstotals=$points+$points;
         $points=0;
-        // echo 'Login = '.$login.'<br/>';
+        echo 'Login = '.$login.'<br/>';
 
 
         // ADDITION DE TOUTE LES PARTIE DU MEME JOUEUR ET MEME LEVEL points
         $l=0;
-        while($l<$nb_partielevel){
+        while($l<$nb_partielevel  and $n<=10){
             if($login==$resultat2[$l][0]){
 
-                // echo 'Points DANS boucle avant '.$points.'<br/>';
+                echo 'Points DANS boucle avant '.$points.'<br/>';
                 $points=$points+$resultat2[$l++][2];
-                // echo 'Points DANS boucle apres '.$points.'<br/>';
+                echo 'Points DANS boucle apres '.$points.'<br/>';
 
             }
             else{
                 ++$l;
             }
+
         }
 
         echo '<br/>';
@@ -228,9 +228,9 @@ while ($n<=10){
             while($r<$nb_partiejoueur){
                 if($login==$resultat2[$r][0]){
     
-                    // echo 'temps DANS boucle avant = '.$temps.'<br/>';
+                    echo 'temps DANS boucle avant = '.$temps.'<br/>';
                     $temps=$temps+$resultat2[$r++][1];
-                    // echo 'temps DANS boucle apres = '.$temps.'<br/>';
+                    echo 'temps DANS boucle apres = '.$temps.'<br/>';
     
                 }
                 else{
@@ -244,22 +244,21 @@ while ($n<=10){
             $temps=1;
         }
         
-        // echo 'calcul temps moyen ='.$temps.'/'.$nb_partiejoueur.'<br/>';
+        echo 'calcul temps moyen ='.$temps.'/'.$nb_partiejoueur.'<br/>';
         $temps=$temps/$nb_partiejoueur;
-        // echo 'Temps moyenne = '.$temps.'<br/>';
+        echo 'Temps moyenne = '.$temps.'<br/>';
 
         
-        // echo 'calcul points moyen ='.$points.'/'.$nb_partiejoueur.'<br/>';
+        echo 'calcul points moyen ='.$points.'/'.$nb_partiejoueur.'<br/>';
         $points=$points/$nb_partiejoueur;
-        // echo 'Points moyen = '.$points.'<br/>';
+        echo 'Points moyen = '.$points.'<br/>';
 
-        // echo 'Points TOTAL bestime  personnel '.$points.' pts<br/>'.'<br/>';
+        echo 'Points TOTAL bestime  personnel '.$points.' pts<br/>'.'<br/>';
 
         
         echo '<br/>';
 
         
-        $points=(1/$temps)*10*$level;
         $points = number_format($points,1);
         $temps = number_format($temps,1);
 
@@ -296,7 +295,7 @@ while ($n<=10){
 $n=1;
 ?> <table>
         <th>TOP 10</th>
-        <th>---TENTATIVE---</th>
+        <th>--- " SANS-FAUTE " ---</th>
         <th>
             <ul id="menu-accordeon">
             <li>
@@ -355,7 +354,7 @@ while ($n<=10){
     // $resultatlevel2[0][0];//Login
     // $resultatlevel2[0][1];//tentative
     // $resultatlevel2[0][2];//points
-    while($k<count($resultatlevel2)){
+    while($k<count($resultatlevel2) and $n<=10){
         $pts=$levelbis/$resultatlevel2[$k][1];
         $ptstotal=$pts*$levelbis*10;
         $ptstotal = number_format($ptstotal,1);
