@@ -106,8 +106,26 @@ class tabcarte
       $_SESSION['temps']= $score['temps']=$tempwin-$this->temp; //chrono
       $_SESSION['level']=$score['niv']=$this->nbfam; // level
       $_SESSION['nb_tentative']=$score['tentative']=$this->nbtentative; // nb-tentative
+
+      if($_SESSION['level']==3 or $_SESSION['level']==4){
+        $_SESSION['level']=1;
+      }
+      if($_SESSION['level']==5 or $_SESSION['level']==6){
+        $_SESSION['level']=2;
+      }
+      if($_SESSION['level']==7 or $_SESSION['level']==8){
+        $_SESSION['level']=3;
+      }
+      if($_SESSION['level']==9 or $_SESSION['level']==10){
+        $_SESSION['level']=4;
+      }
+      if($_SESSION['level']==11 or $_SESSION['level']==12){
+        $_SESSION['level']=5;
+      }
       
-      echo $_SESSION['defi'].'<br/>';
+      echo 'DEFI  = '.$_SESSION['defi'].'<br/>';
+      echo 'Level = '.$_SESSION['level'].'<br/>';
+
 
       if($_SESSION['temps']!=0 and $_SESSION['nb_tentative']!=0){
 
@@ -125,32 +143,30 @@ class tabcarte
           $query0=mysqli_query($connexion,$requete0);
           $resultat0=mysqli_fetch_all($query0);
 
-          echo ($requete0).'<br/>';
-          echo $resultat0[0][0].'<br/>';
+          // echo ($requete0).'<br/>';
+          // echo 'Id = '.$resultat0[0][0].'<br/>';
           $_SESSION['id_utilisateur']=$resultat0[0][0];
 
     
           if($_SESSION['defi']=='Chrono' and isset($_SESSION['login'])){
 
-          $_SESSION['pointstime']= number_format($_SESSION['pointstime'],1);
-          ceil($_SESSION['pointstime']);
+            $_SESSION['pointstime']= number_format($_SESSION['pointstime'],1);
+            ceil($_SESSION['pointstime']);
 
-
-            $requete="INSERT INTO besttime (login,temps,points,level,defi,utilise,id_utilisateur) VALUES ('".$_SESSION['login']."','".$_SESSION['temps']."','".$_SESSION['pointstime']."','".$_SESSION['level']."','".$_SESSION['defi']."','oui','".$_SESSION['id_utilisateur']."') ";
+            $requete="INSERT INTO besttime (login,temps,points,level,defi,utilise,id_utilisateur) VALUES ('".$_SESSION['login']."','".$_SESSION['temps']."','".$_SESSION['pointstime']."','".$_SESSION['level']."','".$_SESSION['defi']."','non','".$_SESSION['id_utilisateur']."') ";
             $query=mysqli_query($connexion,$requete);
-            echo ($requete).'<br/>';
-  
-  
+            // echo ($requete).'<br/>';
           }
+
           if($_SESSION['defi']=='Sans faute' and isset($_SESSION['login'])){
 
             $_SESSION['pointstentative']= number_format($_SESSION['pointstentative'],1);
             ceil($_SESSION['pointstentative']);
 
             $connexion=mysqli_connect('localhost',"root","","memory");
-            $requete1="INSERT INTO besttentative (login,nb_tentative,points,level,defi,utilise,id_utilisateur) VALUES ('".$_SESSION['login']."','".$_SESSION['nb_tentative']."','".$_SESSION['pointstentative']."','".$_SESSION['level']."','".$_SESSION['defi']."','oui','".$_SESSION['id_utilisateur']."') ";
+            $requete1="INSERT INTO besttentative (login,nb_tentative,points,level,defi,utilise,id_utilisateur) VALUES ('".$_SESSION['login']."','".$_SESSION['nb_tentative']."','".$_SESSION['pointstentative']."','".$_SESSION['level']."','".$_SESSION['defi']."','non','".$_SESSION['id_utilisateur']."') ";
             $query1=mysqli_query($connexion,$requete1);
-            echo ($requete1).'<br/>';
+            // echo ($requete1).'<br/>';
   
           }
         }
@@ -162,8 +178,18 @@ class tabcarte
       ?> 
       <h1 id="win">Winner</h1> 
       <a href="partage.php">Partager mon score</a>
-      <p><?=$score['temps'];  ?> secondes</p>            <!--  /* VARIABLE TEMPS A RECUPERER POUR WALL OF FAME*/k ****************************************** -->
+      <p><?=$score['temps']; if($_SESSION['nb_tentative']==0){echo '<br/>';echo 'Félicitation !!! Vous avez fait un sans faute '.ucfirst($_SESSION['login']).' !!'.'<br/>';} ?> secondes</p>            <!--  /* VARIABLE TEMPS A RECUPERER POUR WALL OF FAME*/k ****************************************** -->
       <?php  //lancé ajout score, nouvelle partie
+      
+      echo 'Votre temps est de '.$_SESSION['temps'].' secondes !<br/>'; 
+      echo 'Nombre de coups : '.$_SESSION['nb_tentative'].' !'.'<br/>';
+      if($_SESSION['defi']=='Chrono'){
+        echo 'Vous gagné '.$_SESSION['pointstime'].' pts <br/>';
+      }
+      else{
+        echo 'Vous gagné '.$_SESSION['pointstentative'].' pts <br/>';
+
+      }
     }
   }
 }
@@ -216,13 +242,13 @@ else
     //formulaire de lancement avec choix et if du post
   ?>
   <form method="post" action="index.php">
-    <label>Nombre de carte</label>
-    <input type="number"  name="niv" placeholder="3" step="1" min="3" max="12" ><br>
     <label>Mode de jeu</label>
     <select name="defi" id="">
         <option type="text" name="time">Chrono<br>
         <option type="text" name="tentative">Sans faute<br>
-    </select>
+    </select><br>
+    <label>Nombre de carte</label>
+    <input type="number"  name="niv" placeholder="3" step="1" min="3" max="12" ><br>
     <input type="submit" name="envniv" value="jouer">
   </form>
   <?php
