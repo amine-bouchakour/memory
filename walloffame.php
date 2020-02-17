@@ -55,14 +55,18 @@ class score{
 
 }
 
-echo 'Login = '.$_SESSION['login'].'<br/>';
-echo 'ID = '.$_SESSION['id'].'<br/>';
-echo 'Nb tentative = '.$_SESSION['nb_tentative'].' coups'.'<br/>';
-echo 'Chrono = '.$_SESSION['temps'].' secondes'.'<br/>';
-echo 'Level = '.$_SESSION['level'].'<br/>';
-echo 'Défi = '.$_SESSION['defi'].'<br/>';
-echo 'Points besttime = '.$_SESSION['pointstime'].'<br/>';
-echo 'Points besttentative = '.$_SESSION['pointstentative'].'<br/>';
+if(isset($_SESSION['login']) and isset($_SESSION['nb_tentative'])){
+
+    echo 'Login = '.$_SESSION['login'].'<br/>';
+    echo 'ID = '.$_SESSION['id'].'<br/>';
+    echo 'Nb tentative = '.$_SESSION['nb_tentative'].' coups'.'<br/>';
+    echo 'Chrono = '.$_SESSION['temps'].' secondes'.'<br/>';
+    echo 'Level = '.$_SESSION['level'].'<br/>';
+    echo 'Défi = '.$_SESSION['defi'].'<br/>';
+    echo 'Points besttime = '.$_SESSION['pointstime'].'<br/>';
+    echo 'Points besttentative = '.$_SESSION['pointstentative'].'<br/>';
+}
+
 
 
 
@@ -167,6 +171,8 @@ else{
     }
 
     $j=0;
+
+    
 while ($n<=10){
     
     // $resultatl2[0][0];//Login
@@ -255,12 +261,11 @@ while ($n<=10){
     }
 
     if($j==count($resultat2)){
-        echo '<tr><td>'.'N°'.$n.'</td><td>'.'$login'.'</td><td>'.'$points'.'</td></tr>';
+        echo '<tr><td>'.'N°'.$n.'</td><td>'.''.'</td><td>'.''.'</td></tr>';
         ++$n;
     }
 
 }
-
 
     // echo 'Login = '.$login.'<br/>';
     // echo 'PTS BESTIME + BESTTENTATIVE = '.$points.'<br/>';
@@ -434,7 +439,7 @@ while ($n<=10){
         ++$n;
     }
     if($k==count($resultatlevel2)){
-        echo '<tr><td>'.'N°'.$n.'</td><td>'.'$login'.'</td><td>'.'$points'.'</td></tr>';
+        echo '<tr><td>'.'N°'.$n.'</td><td>'.''.'</td><td>'.''.'</td></tr>';
         ++$n;
 
     }
@@ -607,7 +612,7 @@ while ($n<=10){
         ++$n;
     }
     if($l==count($resultatlevel3)){
-        echo '<tr><td>'.'N°'.$n.'</td><td>'.'$login'.'</td><td>'.'$points'.'</td></tr>';
+        echo '<tr><td>'.'N°'.$n.'</td><td>'.''.'</td><td>'.''.'</td></tr>';
         ++$n;
 
     }
