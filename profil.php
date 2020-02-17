@@ -34,7 +34,7 @@ $n=1;
     <th>-- VOS 5 MEILLEURS PARTIES --</th>
     <th>
         <ul id="menu-accordeon">
-            <li><a href="#"><?php if(!isset($_GET['levelbis'])){ echo 'Level 1';} else{echo 'Level '.$_GET['levelbis'];} ?></a>
+            <li><a href="#"><?php if(!isset($_GET['level'])){ echo 'Level 1';} else{echo 'Level '.$_GET['level'];} ?></a>
                 <ul>
                     <li><a
                             href="profil.php?tab=1&amp;type=time&amp;level=1">Level
@@ -79,30 +79,67 @@ if(isset($_GET['tab'])){
         $level=1;
     } 
 $connexion=mysqli_connect('localhost','root','','memory');
-$requete="SELECT login,points FROM besttime WHERE level='".$level."' and login='".$_SESSION['login']."' ORDER BY points DESC";
+$requete="SELECT login,points,temps FROM besttime WHERE level='".$level."' and login='".$_SESSION['login']."' ORDER BY points DESC";
 $query=mysqli_query($connexion,$requete);
 $resultatlevel2=mysqli_fetch_all($query);
-var_dump($resultatlevel2);
-echo $level.'<br/>';
+// var_dump($resultatlevel2);
+// echo $level.'<br/>';
 
 // TABLEAU VOS PARTIES 
 
 $n=1;
 $k=0;
+echo '<tr><td>'.'N°'.$n.'</td><td>'.'BEST CHRONO'.'</td><td>'.'BEST POINTS'.'</td></tr>';
+
+if(isset($resultatlevel2)){
+
 while ($n<=5){    
 // $resultatlevel2[0][0];//Login
 // $resultatlevel2[0][1];//points
-while($k<count($resultatlevel2)){
-    echo '<tr><td>'.'N°'.$n.'</td><td><b> '.$resultatlevel2[0][0].' --$défi $temps/$coups $date--</b></td><td><b>'.$resultatlevel2[$k][1].'</b> pts '.'</td></tr>';
+while($k<count($resultatlevel2) and $n<=5){
+    echo '<tr><td>'.'N°'.$n.'</td><td><b> '.ucfirst($resultatlevel2[0][0]).' -- '.$resultatlevel2[$k][2].' secondes : le $date </b></td><td><b>'.$resultatlevel2[$k][1].'</b> pts '.'</td></tr>';
     ++$k;
     ++$n;
 }
 if($k==count($resultatlevel2)){
-    echo '<tr><td>'.'N°'.$n.'</td><td>'.'$login'.'</td><td>'.'$points'.'</td></tr>';
+    echo '<tr><td>'.'N°'.$n.'</td><td>'.''.'</td><td>'.''.'</td></tr>';
     ++$n;
 
+        }
+    }
 }
+$connexion=mysqli_connect('localhost','root','','memory');
+$requete1="SELECT login,points,nb_tentative FROM besttentative WHERE level='".$level."' and login='".$_SESSION['login']."' ORDER BY points DESC";
+$query=mysqli_query($connexion,$requete1);
+$resultat1=mysqli_fetch_all($query);
+// var_dump($resultat1);
+// echo $requete1.'<br/>';
+echo 'Level = '.$level.'<br/>';
+
+// TABLEAU VOS PARTIES 
+if(isset($resultat1)){
+
+$n=1;
+$k=0;
+echo '<tr><td>'.'N°'.$n.'</td><td>'.'BEST SANS-FAUTE'.'</td><td>'.'BEST POINTS'.'</td></tr>';
+
+while ($n<=5){    
+// $resultatlevel2[0][0];//Login
+// $resultatlevel2[0][1];//points
+
+while($k<count($resultat1) and $n<=5){
+    echo '<tr><td>'.'N°'.$n.'</td><td><b> '.ucfirst($resultat1[0][0]).' -- '.$resultat1[$k][2].' coups : le $date </b></td><td><b>'.$resultat1[$k][1].'</b> pts '.'</td></tr>';
+    ++$k;
+    ++$n;
 }
+if($k==count($resultat1)){
+    echo '<tr><td>'.'N°'.$n.'</td><td>'.''.'</td><td>'.''.'</td></tr>';
+    ++$n;
+
+        }
+    }
+}
+
 ?>
 </table>
 

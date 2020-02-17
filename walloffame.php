@@ -443,7 +443,16 @@ while ($n<=10){
     </table>
 
     <br>
-    <!-- TEST PRINCIPALE BESTSCORE -->
+
+    
+<!-- TEST PRINCIPALE BESTSCORE -->
+
+
+<?php
+
+?>
+
+</html>
 
     <?php
 
@@ -507,8 +516,8 @@ $connexion=mysqli_connect('localhost','root','','memory');
 $requete1="SELECT points,utilise,id_utilisateur,login FROM besttime WHERE level='".$levelbis2."' ORDER BY points DESC";
 $query=mysqli_query($connexion,$requete1);
 $resultatlevel1=mysqli_fetch_all($query);
-var_dump($resultatlevel1);
-echo($requete1).'<br/>';
+// var_dump($resultatlevel1);
+// echo($requete1).'<br/>';
 echo 'login = '.$resultatlevel1[0][3].'<br/>';//login
 echo 'id_utilisateur = '.$resultatlevel1[0][2].'<br/>';//id_utilisateur
 
@@ -574,9 +583,9 @@ else{
 //     $query=mysqli_query($connexion,$requete);
 // }
 
-echo 'Points time : '.$ptstime.'<br/>';
-echo 'Points tentative '.$ptstentative.'<br/>';
-echo 'Points Totals : '.$ptstotal.'<br/>';
+// echo 'Points time : '.$ptstime.'<br/>';
+// echo 'Points tentative '.$ptstentative.'<br/>';
+// echo 'Points Totals : '.$ptstotal.'<br/>';
 
 
     $connexion=mysqli_connect('localhost','root','','memory');
@@ -605,9 +614,3 @@ while ($n<=10){
 }?>
     </table>
 </section>
-
-<?php
-
-?>
-
-</html>
