@@ -507,9 +507,10 @@ $connexion=mysqli_connect('localhost','root','','memory');
 $requete1="SELECT points,utilise,id_utilisateur,login FROM besttime WHERE level='".$levelbis2."' ORDER BY points DESC";
 $query=mysqli_query($connexion,$requete1);
 $resultatlevel1=mysqli_fetch_all($query);
-// echo($requete1).'<br/>';
-echo $resultatlevel1[0][3].'<br/>';//login
-echo $resultatlevel1[0][2].'<br/>';//id_utilisateur
+var_dump($resultatlevel1);
+echo($requete1).'<br/>';
+echo 'login = '.$resultatlevel1[0][3].'<br/>';//login
+echo 'id_utilisateur = '.$resultatlevel1[0][2].'<br/>';//id_utilisateur
 
 
 
@@ -524,6 +525,8 @@ $query2=mysqli_query($connexion,$requete2);
     while($m<count($resultatlevel1)){
         $ptstime=$ptstime+$resultatlevel1[$m][0];
         ++$m;
+
+        echo 'Points bestime'.$ptstime.'<br/>';
     }
 }
 else{
