@@ -157,7 +157,7 @@ $connexion=mysqli_connect('localhost','root','','memory');
 $requete="SELECT login,temps,points,id_utilisateur FROM besttime WHERE level='".$level."' ORDER BY points DESC";
 $query=mysqli_query($connexion,$requete);
 $resultat2=mysqli_fetch_all($query);
-var_dump($resultat2);
+// var_dump($resultat2);
 
 if(!empty($resultat2)){
     $nb_partielevel=count($resultat2);
@@ -202,7 +202,7 @@ while ($n<=10){
         $requete1="SELECT login,temps,points,id_utilisateur FROM besttime WHERE level='".$level."' and id_utilisateur='".$id_utilisateur."' ORDER BY points DESC";
         $query1=mysqli_query($connexion,$requete1);
         $resultat1=mysqli_fetch_all($query1);
-            
+            var_dump($resultat1);   
         if(!empty($resultat1)){
             $nb_partiejoueur=count($resultat1);
             }
@@ -212,7 +212,7 @@ while ($n<=10){
             }
             // ADDITION DE TOUTE LES PARTIE DU MEME JOUEUR ET MEME LEVEL temps
             $r=0;
-            while($r<$nb_partiejoueur ){
+            while($r<=$nb_partiejoueur+2){
                 if($login==$resultat2[$r][0]){
                     // echo 'temps DANS boucle avant = '.$temps.'<br/>';
                     $temps=$temps+$resultat2[$r++][1];
@@ -221,6 +221,7 @@ while ($n<=10){
                 else{
                     ++$r;
                 }
+               
             }
             echo '<br/>';
 
