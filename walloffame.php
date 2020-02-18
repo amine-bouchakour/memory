@@ -183,7 +183,7 @@ else{
        
         while($n<=10)
         {
-            echo '<tr><td>'.'N°'.$n.'</td><td>'.'<b>'.'</b>'.'</td><td><b>'.'</b> <b> '.'</b> pts '.'</td></tr>';
+            echo '<tr><td>'.'N°'.$n.'</td><td>'.'<b>'.'</b>'.'</td><td><b>'.'</b> <b> '.'</b> '.'</td></tr>';
             $n++;
         }
     ?>
@@ -277,7 +277,7 @@ else{
    
     while($n<=10)
     {
-        echo '<tr><td>'.'N°'.$n.'</td><td>'.'<b>'.'</b>'.'</td><td><b>'.'</b> <b> '.'</b> pts '.'</td></tr>';
+        echo '<tr><td>'.'N°'.$n.'</td><td>'.'<b>'.'</b>'.'</td><td><b>'.'</b> <b> '.'</b>'.'</td></tr>';
         $n++;
     }
 ?>
@@ -294,7 +294,6 @@ else{
 
 ?>
 
-</html>
 
     <?php
 
@@ -352,10 +351,8 @@ else{
 
 $connexion=mysqli_connect('localhost','root','','memory');
     $requete0="SELECT utilisateurs.login,SUM(besttime.points) + SUM(besttentative.points) FROM utilisateurs INNER JOIN besttime on utilisateurs.id=besttime.id_utilisateur INNER JOIN besttentative on utilisateurs.id=besttentative.id_utilisateur WHERE besttime.level='".$levelbis2."' AND besttentative.level='".$levelbis2."' GROUP by utilisateurs.login ORDER BY SUM(besttime.points) + SUM(besttentative.points) LIMIT 10 ";
-    
     $query0=mysqli_query($connexion,$requete0);
     $resultat0=mysqli_fetch_all($query0);
-    //var_dump($resultat0);
     $n=1;
     foreach($resultat0 as $ligne)
     {
@@ -374,3 +371,5 @@ $connexion=mysqli_connect('localhost','root','','memory');
 ?>
     </table>
 </section>
+
+</html>

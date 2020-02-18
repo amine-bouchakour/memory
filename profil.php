@@ -7,14 +7,8 @@
 session_start();
 
 
+if(isset($_SESSION['login'])){
 
-
-class scoreprofil{
-
-
-
-
-}
 
 ?>
 
@@ -149,4 +143,10 @@ if($k==count($resultat1)){
 </table>
 
 
+<?php
+}
+else{
+    echo 'La page profil n\'est accessible que si vous êtes connecté'.'<br/>';
+}
 
+?>
