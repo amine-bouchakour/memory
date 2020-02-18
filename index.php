@@ -143,6 +143,11 @@ class tabcarte
           $query0=mysqli_query($connexion,$requete0);
           $resultat0=mysqli_fetch_all($query0);
 
+          date_default_timezone_set('Europe/Paris');
+
+          echo 'date = '.date('Y-m-d H:i:s').'<br/>';
+          
+          $_SESSION['date']=date('Y-m-d H:i:s');
           // echo ($requete0).'<br/>';
           // echo 'Id = '.$resultat0[0][0].'<br/>';
           $_SESSION['id_utilisateur']=$resultat0[0][0];
@@ -153,9 +158,9 @@ class tabcarte
             $_SESSION['pointstime']= number_format($_SESSION['pointstime'],1);
             ceil($_SESSION['pointstime']);
 
-            $requete="INSERT INTO besttime (login,temps,points,level,defi,utilise,id_utilisateur) VALUES ('".$_SESSION['login']."','".$_SESSION['temps']."','".$_SESSION['pointstime']."','".$_SESSION['level']."','".$_SESSION['defi']."','non','".$_SESSION['id_utilisateur']."') ";
+            $requete="INSERT INTO besttime (login,temps,points,level,defi,utilise,id_utilisateur,date) VALUES ('".$_SESSION['login']."','".$_SESSION['temps']."','".$_SESSION['pointstime']."','".$_SESSION['level']."','".$_SESSION['defi']."','non','".$_SESSION['id_utilisateur']."','".$_SESSION['date']."') ";
             $query=mysqli_query($connexion,$requete);
-            // echo ($requete).'<br/>';
+            // echo ($requete).'<br/>'; 
           }
 
           if($_SESSION['defi']=='Sans faute' and isset($_SESSION['login'])){
@@ -164,7 +169,7 @@ class tabcarte
             ceil($_SESSION['pointstentative']);
 
             $connexion=mysqli_connect('localhost',"root","","memory");
-            $requete1="INSERT INTO besttentative (login,nb_tentative,points,level,defi,utilise,id_utilisateur) VALUES ('".$_SESSION['login']."','".$_SESSION['nb_tentative']."','".$_SESSION['pointstentative']."','".$_SESSION['level']."','".$_SESSION['defi']."','non','".$_SESSION['id_utilisateur']."') ";
+            $requete1="INSERT INTO besttentative (login,nb_tentative,points,level,defi,utilise,id_utilisateur,date) VALUES ('".$_SESSION['login']."','".$_SESSION['nb_tentative']."','".$_SESSION['pointstentative']."','".$_SESSION['level']."','".$_SESSION['defi']."','non','".$_SESSION['id_utilisateur']."','".$_SESSION['date']."') ";
             $query1=mysqli_query($connexion,$requete1);
             // echo ($requete1).'<br/>';
   
