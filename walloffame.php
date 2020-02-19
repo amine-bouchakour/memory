@@ -9,17 +9,17 @@ session_start();
 
 
 
-if(isset($_SESSION['login']) and isset($_SESSION['nb_tentative'])){
+// if(isset($_SESSION['login']) and isset($_SESSION['nb_tentative'])){
 
-    echo 'Login = '.$_SESSION['login'].'<br/>';
-    echo 'ID = '.$_SESSION['id'].'<br/>';
-    echo 'Nb tentative = '.$_SESSION['nb_tentative'].' coups'.'<br/>';
-    echo 'Chrono = '.$_SESSION['temps'].' secondes'.'<br/>';
-    echo 'Level = '.$_SESSION['level'].'<br/>';
-    echo 'Défi = '.$_SESSION['defi'].'<br/>';
-    echo 'Points besttime = '.$_SESSION['pointstime'].'<br/>';
-    echo 'Points besttentative = '.$_SESSION['pointstentative'].'<br/>';
-}
+//     echo 'Login = '.$_SESSION['login'].'<br/>';
+//     echo 'ID = '.$_SESSION['id'].'<br/>';
+//     echo 'Nb tentative = '.$_SESSION['nb_tentative'].' coups'.'<br/>';
+//     echo 'Chrono = '.$_SESSION['temps'].' secondes'.'<br/>';
+//     echo 'Level = '.$_SESSION['level'].'<br/>';
+//     echo 'Défi = '.$_SESSION['defi'].'<br/>';
+//     echo 'Points besttime = '.$_SESSION['pointstime'].'<br/>';
+//     echo 'Points besttentative = '.$_SESSION['pointstentative'].'<br/>';
+// }
 
 
 // <!-- TEST " CHRONO " -->
@@ -46,10 +46,10 @@ $n=1;
 ?>
 <section class="aligntab">
     <table>
-    <th class="col1">TOP 10</th>
+    <th class="col1">Top</th>
 
-        <th class="col"></th>
-        <th class="col1"> " CHRONO " </th>
+        <th class="col1"> 10</th>
+        <th class="col1"> " Chrono " </th>
         <th>
             <ul id="menu-accordeon">                
 
@@ -148,10 +148,10 @@ else{
 
 $n=1;
 ?> <table>
-    <th class="col1">TOP 10</th>
+    <th class="col1">Top</th>
 
-        <th class="col"></th>
-        <th class="col1"> " SANS-FAUTE " </th>
+        <th class="col1">10</th>
+        <th class="col1"> " Sans-faute " </th>
         <th>
             <ul id="menu-accordeon">
             <li>
@@ -250,10 +250,10 @@ else{
 
 $n=1;
 ?> <table>
-    <th class="col1">TOP 10</th>
+    <th class="col1">Top</th>
 
-        <th class="col"></th>
-        <th class="col1">" BEST TOTAL POINTS "</th>
+        <th class="col1">10</th>
+        <th class="col1">" Best total points "</th>
         <th>
             <ul id="menu-accordeon">
             <li>

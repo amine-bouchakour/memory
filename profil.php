@@ -16,10 +16,10 @@ if(isset($_SESSION['login'])){
 <br>
 <!-- TEST VOS PARTIE -->
 <?php
-if(isset($_SESSION['login']) and isset($_SESSION['id'])){
-    echo 'id= '.$_SESSION['id'].'<br/>';
-    echo 'login= '.$_SESSION['login'].'<br/>';
-}
+// if(isset($_SESSION['login']) and isset($_SESSION['id'])){
+//     echo 'id= '.$_SESSION['id'].'<br/>';
+//     echo 'login= '.$_SESSION['login'].'<br/>';
+// }
 
 date_default_timezone_set('Europe/Paris');
 
@@ -27,8 +27,8 @@ date_default_timezone_set('Europe/Paris');
 
 $n=1;
 ?> <table>
-    <th class="col1">TOP 5 </th>
-    <th class="col1"> /--- PAR MODE DE JEU ---\ </th>
+    <th class="col1">TOP 5</th>
+    <th class="col1"> --- PAR MODE DE JEU --- </th>
     <th>
         <ul id="menu-accordeon">
             <li><a href="#">** <?php if(!isset($_GET['level'])){ echo 'Level 1';} else{echo 'Level '.$_GET['level'];} ?> **</a>
@@ -112,7 +112,7 @@ $query=mysqli_query($connexion,$requete1);
 $resultat1=mysqli_fetch_all($query);
 // var_dump($resultat1);
 // echo $requete1.'<br/>';
-echo 'Level = '.$level.'<br/>';
+// echo 'Level = '.$level.'<br/>';
 
 // TABLEAU VOS PARTIES 
 if(isset($resultat1)){
