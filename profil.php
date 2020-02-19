@@ -27,8 +27,8 @@ date_default_timezone_set('Europe/Paris');
 
 $n=1;
 ?> <table>
-    <th>TOP</th>
-    <th>-- VOS 5 MEILLEURS PARTIES --</th>
+    <th></th>
+    <th>-- VOTRE TOP 5 PAR MODE DE JEU --</th>
     <th>
         <ul id="menu-accordeon">
             <li><a href="#"><?php if(!isset($_GET['level'])){ echo 'Level 1';} else{echo 'Level '.$_GET['level'];} ?></a>
@@ -86,7 +86,7 @@ $resultatlevel2=mysqli_fetch_all($query);
 
 $n=1;
 $k=0;
-echo '<tr><td>'.'N°'.$n.'</td><td>'.'BEST CHRONO'.'</td><td>'.'BEST POINTS'.'</td></tr>';
+echo '<tr><td>'.'CLASSEMENT'.'</td><td>'.'BEST CHRONO'.'</td><td>'.'BEST POINTS'.'</td></tr>';
 
 if(isset($resultatlevel2)){
 
@@ -119,7 +119,7 @@ if(isset($resultat1)){
 
 $n=1;
 $k=0;
-echo '<tr><td>'.'N°'.$n.'</td><td>'.'BEST SANS-FAUTE'.'</td><td>'.'BEST POINTS'.'</td></tr>';
+echo '<tr><td>'.'CLASSEMENT'.'</td><td>'.'BEST SANS-FAUTE'.'</td><td>'.'BEST POINTS'.'</td></tr>';
 
 while ($n<=5){    
 // $resultatlevel2[0][0];//Login
@@ -128,7 +128,6 @@ while ($n<=5){
 while($k<count($resultat1) and $n<=5){
     
     echo '<tr><td>'.'N°'.$n.'</td><td><b> '.ucfirst($resultat1[0][0]).' -- '.$resultat1[$k][2].' coups : le '.$resultatlevel2[$k][3].' </b></td><td><b>'.$resultat1[$k][1].'</b> pts '.'</td></tr>';
-    ++$k;
     ++$n;
 }
 if($k==count($resultat1)){
