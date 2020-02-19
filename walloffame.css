@@ -22,22 +22,51 @@ table,tr,td{
     border:2px black solid;
     border-radius: 6px;
     border:2px black solid;
-
-
-}
-
-td{
-  padding: 10px 10px 10px;
-  border-radius: 6px;
-text-align: center;
-
 }
 
 table{
     margin: 50px 30px 50px;
-    border-radius: 2em 2em 1em 1em;
-    border:10px black solid;
+    border-radius: 1em 1em 1em 1em;
+    border:8px rgb(105, 97, 43)solid;
+    background-color: rgb(0, 0, 0);
+
 }
+
+.thead{
+  font-size:21px;
+  font-weight: bold;
+  background-color: rgb(253, 188, 127);
+}
+
+.num{
+  font-size:large;
+}
+
+.num1{
+  font-size:large;
+  background-color: rgb(216, 255, 176);
+}
+.num1bis{
+  font-size:large;
+  background-color: rgb(255, 244, 175);
+}
+
+.col{
+  color:white;
+}
+
+.col1{
+  color:white;
+  font-size: x-large;
+}
+
+td{
+  padding: 5px 10px 5px 10px;
+  border-radius: 6px;
+  text-align: center;
+
+}
+
 
 /* MENU DEROULANT CLASSEMENT NIVEAU */
 
@@ -55,12 +84,9 @@ table{
     text-align: center;
   }
   #menu-accordeon li {
-     background-color:#729EBF; 
-     background-image:-webkit-linear-gradient(top, #729EBF 0%, #333A40 100%);
-     background-image: linear-gradient(to bottom, #729EBF 0%, #333A40 100%);
+     background-image: linear-gradient(to bottom, rgb(226, 90, 72) 0%, rgb(52, 71, 90) 100%);
      border-radius: 6px;
      margin-bottom:2px;
-     box-shadow: 3px 3px 3px #999;
      border:solid 1px #333A40;
   }
   #menu-accordeon li li {
@@ -68,10 +94,10 @@ table{
      overflow: hidden;
      transition: all .5s;
      border-radius:0;
-     background: rgb(255, 157, 157);
      box-shadow: none;
      border:none;
      margin:0;
+     background: rgb(226, 90, 72);
 
   }
   #menu-accordeon a {
@@ -86,7 +112,7 @@ table{
     font-size:1em;
   }
   #menu-accordeon li:hover {
-     background: #729EBF;
+     background: rgb(226, 90, 72);
   }
   #menu-accordeon li li:hover {
      background: #999;

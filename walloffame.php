@@ -46,10 +46,10 @@ $n=1;
 ?>
 <section class="aligntab">
     <table>
-    <th></th>
+    <th class="col1">TOP 10</th>
 
-        <th>TOP 10</th>
-        <th>--- " CHRONO " ---</th>
+        <th class="col"></th>
+        <th class="col1"> " CHRONO " </th>
         <th>
             <ul id="menu-accordeon">                
 
@@ -119,19 +119,19 @@ else{
         $resultat0=mysqli_fetch_all($query0);
         //var_dump($resultat0);
         $n=1;
-        echo '<tr><td>'.''.'</td><td>'.'Pseudo'.'</td><td>'.'Moyenne TEMPS'.'</td><td>Moyenne POINTS</td></tr>';
+        echo '<tr><td class="thead">'.'#1'.'</td><td class="thead">'.'Pseudo'.'</td><td class="thead">'.'Moyenne TEMPS'.'</td><td class="thead">Moyenne POINTS</td></tr>';
 
         foreach($resultat0 as $ligne)
         {
             $ligne[1] = number_format($ligne[1],2);
             $ligne[2] = number_format($ligne[2],1);
-            echo '<tr><td>'.'N°<b>'.$n.'</b></td><td>'.'<b>'.ucfirst($ligne[0]).'</b>'.'</td><td><b> '.$ligne[2].'</b> secondes </td><td><b> '.$ligne[1].'</b> pts '.'</td></tr>';
+            echo '<tr><td class="num1">'.'N°<b>'.$n.'</b></td><td class="num1">'.'<b>'.ucfirst($ligne[0]).'</b>'.'</td><td class="num1"><b> '.$ligne[2].'</b> secondes </td><td class="num1"><b> '.$ligne[1].'</b> pts '.'</td></tr>';
             $n++;
         }  
        
         while($n<=10)
         {
-            echo '<tr><td>'.'N°<b>'.$n.'</b></td><td>'.'<b>'.'</b>'.'</td><td><b>'.'</b> <b> '.'</b> '.'</td><td></td></tr>';
+            echo '<tr><td class="num1bis">'.'N°<b>'.$n.'</b></td><td class="num1bis">'.'<b>'.'</b>'.'</td><td class="num1bis"><b>'.'</b> <b> '.'</b> '.'</td><td class="num1bis"></td></tr>';
             $n++;
         }
     ?>
@@ -148,10 +148,10 @@ else{
 
 $n=1;
 ?> <table>
-    <th></th>
+    <th class="col1">TOP 10</th>
 
-        <th>TOP 10</th>
-        <th>--- " SANS-FAUTE " ---</th>
+        <th class="col"></th>
+        <th class="col1"> " SANS-FAUTE " </th>
         <th>
             <ul id="menu-accordeon">
             <li>
@@ -217,19 +217,19 @@ else{
     $resultat0=mysqli_fetch_all($query0);
     //var_dump($resultat0);
     $n=1;
-    echo '<tr><td>'.''.'</td><td>'.'Pseudo'.'</td><td>'.'Moyenne COUPS'.'</td><td>Moyenne POINTS</td></tr>';
+    echo '<tr><td class="thead">'.'#2'.'</td><td class="thead">'.'Pseudo'.'</td><td class="thead">'.'Moyenne COUPS'.'</td><td class="thead">Moyenne POINTS</td></tr>';
 
     foreach($resultat0 as $ligne)
     {
         $ligne[1] = number_format($ligne[1],2);
         $ligne[2] = number_format($ligne[2],1);
-        echo '<tr><td>'.'N°<b>'.$n.'</b></td><td>'.'<b>'.ucfirst($ligne[0]).'</b>'.'</td><td><b>'.$ligne[2].'</b> coups</td><td><b> '.$ligne[1].'</b> pts '.'</td></tr>';
+        echo '<tr><td  class="num1">'.'N°<b>'.$n.'</b></td><td class="num1">'.'<b>'.ucfirst($ligne[0]).'</b>'.'</td><td class="num1"><b>'.$ligne[2].'</b> coups</td><td class="num1"><b> '.$ligne[1].'</b> pts '.'</td></tr>';
         $n++;
     }  
    
     while($n<=10)
     {
-        echo '<tr><td>'.'N°<b>'.$n.'</b></td><td>'.'<b>'.'</b>'.'</td><td><b>'.'</b> <b> '.'</b>'.'</td><td></td></tr>';
+        echo '<tr><td  class="num1bis">'.'N°<b>'.$n.'</b></td><td class="num1bis">'.'<b>'.'</b>'.'</td><td class="num1bis"><b>'.'</b> <b> '.'</b>'.'</td><td class="num1bis"></td></tr>';
         $n++;
     }
 ?>
@@ -242,7 +242,6 @@ else{
 
 
 
-// SELECT utilisateurs.login,SUM(besttime.points) + SUM(besttentative.points) FROM utilisateurs INNER JOIN besttime on utilisateurs.id=besttime.id_utilisateur INNER JOIN besttentative on utilisateurs.id=besttentative.id_utilisateur WHERE besttime.level=3 AND besttentative.level=3 GROUP by utilisateurs.login
 
 ?>
 
@@ -251,10 +250,10 @@ else{
 
 $n=1;
 ?> <table>
-    <th></th>
+    <th class="col1">TOP 10</th>
 
-        <th>TOP 10</th>
-        <th>--- " BEST TOTAL POINTS " ---</th>
+        <th class="col"></th>
+        <th class="col1">" BEST TOTAL POINTS "</th>
         <th>
             <ul id="menu-accordeon">
             <li>
@@ -303,23 +302,24 @@ else{
     $levelbis2=1;
 }
 
-$connexion=mysqli_connect('localhost','root','','memory');
+    $connexion=mysqli_connect('localhost','root','','memory');
     $requete0="SELECT utilisateurs.login,SUM(besttime.points) + SUM(besttentative.points) FROM utilisateurs INNER JOIN besttime on utilisateurs.id=besttime.id_utilisateur INNER JOIN besttentative on utilisateurs.id=besttentative.id_utilisateur WHERE besttime.level='".$levelbis2."' AND besttentative.level='".$levelbis2."' GROUP by utilisateurs.login ORDER BY SUM(besttime.points) + SUM(besttentative.points) LIMIT 10 ";
     $query0=mysqli_query($connexion,$requete0);
     $resultat0=mysqli_fetch_all($query0);
+
     $n=1;
-    echo '<tr><td>'.''.'</td><td>'.'Pseudo'.'</td><td>'.'<b>Pts total</b> <i>Chrono</i> + <b>Pts total </b><i>Sans-faute</i>'.'</td><td>Total POINTS</td></tr>';
+    echo '<tr><td class="thead">'.'#3'.'</td><td class="thead">'.'Pseudo'.'</td><td class="thead">'.'CALCUL'.'</td><td class="thead">Total POINTS</td></tr>';
 
     foreach($resultat0 as $ligne)
     {
         $ligne[1] = number_format($ligne[1],2);
-        echo '<tr><td>'.'N°<b>'.$n.'</b></td><td>'.'<b>'.ucfirst($ligne[0]).'</b>'.'</td><td><i>Calcul</i> </td><td><b>'.$ligne[1].'</b> pts '.'</td></tr>';
+        echo '<tr><td  class="num1">'.'N°<b>'.$n.'</b></td><td class="num1">'.'<b>'.ucfirst($ligne[0]).'</b>'.'</td><td class="num1"><b>Pts total </b><i>Chrono</i> + <b>Pts total </b><i>Sans-faute</i> </td><td class="num1"><b>'.$ligne[1].'</b> pts '.'</td></tr>';
         $n++;
     }  
    
     while($n<=10)
     {
-        echo '<tr><td>'.'N°<b>'.$n.'</b></td><td>'.'<b>'.'</b>'.'</td><td><b>'.'</b> <b> '.'</b>'.'</td><td></td></tr>';
+        echo '<tr><td  class="num1bis">'.'N°<b>'.$n.'</b></td><td class="num1bis">'.'<b>'.'</b>'.'</td><td class="num1bis"><b>'.'</b> <b> '.'</b>'.'</td><td class="num1bis"></td></tr>';
         $n++;
     }
 

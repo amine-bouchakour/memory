@@ -27,8 +27,8 @@ date_default_timezone_set('Europe/Paris');
 
 $n=1;
 ?> <table>
-    <th>VOTRE TOP 5 </th>
-    <th>-- PAR MODE DE JEU --</th>
+    <th class="col1">TOP 5 </th>
+    <th class="col1"> /--- PAR MODE DE JEU ---\ </th>
     <th>
         <ul id="menu-accordeon">
             <li><a href="#">** <?php if(!isset($_GET['level'])){ echo 'Level 1';} else{echo 'Level '.$_GET['level'];} ?> **</a>
@@ -86,7 +86,7 @@ $resultatlevel2=mysqli_fetch_all($query);
 
 $n=1;
 $k=0;
-echo '<tr><td>'.'CLASSEMENT'.'</td><td>'.'BEST CHRONO'.'</td><td>'.'BEST POINTS'.'</td></tr>';
+echo '<tr><td class="thead">'.'<b>#1</b>'.'</td><td class="thead">'.'BEST CHRONO'.'</td><td class="thead">'.'BEST POINTS'.'</td></tr>';
 
 if(isset($resultatlevel2)){
 
@@ -95,12 +95,12 @@ while ($n<=5){
 // $resultatlevel2[0][1];//points
 while($k<count($resultatlevel2) and $n<=5){
     
-    echo '<tr><td>'.'N°<b>'.$n.'</b></td><td><b> '.ucfirst($resultatlevel2[0][0]).' -- '.$resultatlevel2[$k][2].' secondes : le '.$resultatlevel2[$k][3].' </b></td><td><b>'.$resultatlevel2[$k][1].'</b> pts '.'</td></tr>';
+    echo '<tr><td  class="num1">'.'N°<b>'.$n.'</b></td><td class="num1"><b> '.ucfirst($resultatlevel2[0][0]).' -- '.$resultatlevel2[$k][2].' secondes : le '.$resultatlevel2[$k][3].' </b></td><td class="num1"><b>'.$resultatlevel2[$k][1].'</b> pts '.'</td></tr>';
     ++$k;
     ++$n;
 }
 if($k==count($resultatlevel2)){
-    echo '<tr><td>'.'N°<b>'.$n.'</b></td><td>'.''.'</td><td>'.''.'</td></tr>';
+    echo '<tr><td  class="num1bis">'.'N°<b>'.$n.'</b></td><td class="num1bis">'.''.'</td><td class="num1bis">'.''.'</td></tr>';
     ++$n;
 
         }
@@ -119,7 +119,7 @@ if(isset($resultat1)){
 
 $n=1;
 $k=0;
-echo '<tr><td>'.'CLASSEMENT'.'</td><td>'.'BEST SANS-FAUTE'.'</td><td>'.'BEST POINTS'.'</td></tr>';
+echo '<tr><td class="thead">'.'<b>#2</b>'.'</td><td class="thead">'.'BEST SANS-FAUTE'.'</td><td class="thead">'.'BEST POINTS'.'</td></tr>';
 
 while ($n<=5){    
 // $resultatlevel2[0][0];//Login
@@ -127,11 +127,11 @@ while ($n<=5){
 
 while($k<count($resultat1) and $n<=5){
     
-    echo '<tr><td>'.'N°<b>'.$n.'</b></td><td><b> '.ucfirst($resultat1[0][0]).' -- '.$resultat1[$k][2].' coups : le '.$resultatlevel2[$k][3].' </b></td><td><b>'.$resultat1[$k][1].'</b> pts '.'</td></tr>';
+    echo '<tr><td  class="num1">'.'N°<b>'.$n.'</b></td><td class="num1"><b> '.ucfirst($resultat1[0][0]).' -- '.$resultat1[$k][2].' coups : le '.$resultatlevel2[$k][3].' </b></td><td class="num1"><b>'.$resultat1[$k][1].'</b> pts '.'</td></tr>';
     ++$n;
 }
 if($k==count($resultat1)){
-    echo '<tr><td>'.'N°<b>'.$n.'</b></td><td>'.''.'</td><td>'.''.'</td></tr>';
+    echo '<tr><td  class="num1bis">'.'N°<b>'.$n.'</b></td><td class="num1bis">'.''.'</td><td class="num1bis">'.''.'</td></tr>';
     ++$n;
 
         }
