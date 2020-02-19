@@ -11,16 +11,15 @@ session_start();
 
 // if(isset($_SESSION['login']) and isset($_SESSION['nb_tentative'])){
 
-//     echo 'Login = '.$_SESSION['login'].'<br/>';
-//     echo 'ID = '.$_SESSION['id'].'<br/>';
-//     echo 'Nb tentative = '.$_SESSION['nb_tentative'].' coups'.'<br/>';
-//     echo 'Chrono = '.$_SESSION['temps'].' secondes'.'<br/>';
-//     echo 'Level = '.$_SESSION['level'].'<br/>';
-//     echo 'Défi = '.$_SESSION['defi'].'<br/>';
-//     echo 'Points besttime = '.$_SESSION['pointstime'].'<br/>';
-//     echo 'Points besttentative = '.$_SESSION['pointstentative'].'<br/>';
+//  echo 'Login = '.$_SESSION['login'].'<br/>';
+//  echo 'ID = '.$_SESSION['id'].'<br/>';
+//  echo 'Nb tentative = '.$_SESSION['nb_tentative'].' coups'.'<br/>';
+//  echo 'Chrono = '.$_SESSION['temps'].' secondes'.'<br/>';
+//  echo 'Level = '.$_SESSION['level'].'<br/>';
+//  echo 'Défi = '.$_SESSION['defi'].'<br/>';
+//  echo 'Points besttime = '.$_SESSION['pointstime'].'<br/>';
+// echo 'Points besttentative = '.$_SESSION['pointstentative'].'<br/>';
 // }
-
 
 // <!-- TEST " CHRONO " -->
 
