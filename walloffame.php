@@ -7,53 +7,7 @@
 session_start();
 
 
-class score{
 
-    public $nb_cout;
-    public $level=1;
-    public $levelbis=1;
-    public $temps;
-    public $défi="";
-
-    Public function scoreperso($défi,$level,$nb_cout,$temps) {
-
-
-        if(isset($défi) and isset($level) and isset($nb_cout) and isset($temps)){
-
-            $connexion=mysqli_connect("Localhost","root","","memory");
-            $requete2="SELECT * FROM utilisateur ";
-            $query=mysqli_query($connexion,$requete2);
-            $resultat=mysqli_fetch_all($query);
-            $resultat[0];
-            var_dump($resultat);
-
-            session_start();
-
-            $this->défi=$défi;
-            $this->level=$level;
-            $this->temps=$temps;
-            $this->nb_cout=$nb_cout;
-            $login=$this->login;
-            $id=$this->id;
-            
-            
-
-            $connexion=mysqli_connect('localhost','root','','memory');
-            $requete="INSERT INTO score (temps,tentative,level,defi,id_utilisateur) VALUES ('".$temps."','".$nb_cout."','".$level."','".$défi."'.'".$id."') WHERE login='".$login."'";
-            $query=mysqli_query($connexion,$requete);
-            echo ($query);
-
-            echo '<br/>Défi = '.$défi.'<br>';
-            echo 'Level = '.$level.'<br>';
-            echo 'Nb_cout = '.$nb_cout.'<br/>';
-            echo 'Temps= '.$temps.'<br/>';
-            echo 'Id= '.$this->id.'<br/>';
-            echo 'login= '.$login.'<br/>';
-
-        }
-    }
-
-}
 
 if(isset($_SESSION['login']) and isset($_SESSION['nb_tentative'])){
 
@@ -66,16 +20,6 @@ if(isset($_SESSION['login']) and isset($_SESSION['nb_tentative'])){
     echo 'Points besttime = '.$_SESSION['pointstime'].'<br/>';
     echo 'Points besttentative = '.$_SESSION['pointstentative'].'<br/>';
 }
-
-
-
-
-
-$totalscore= new score;
-if(isset($_POST['valider'])){
-    $memory->scoreperso($_POST['défi'],$_POST['level'],$_POST['nb_cout'],$_POST['temps']);
-}
-
 
 
 // <!-- TEST " CHRONO " -->
@@ -102,13 +46,15 @@ $n=1;
 ?>
 <section class="aligntab">
     <table>
+    <th></th>
+
         <th>TOP 10</th>
         <th>--- " CHRONO " ---</th>
         <th>
             <ul id="menu-accordeon">                
 
                 <li>
-                <a href="#"><?php if(!isset($_GET['level'])){ echo 'Level 1';} else{echo 'Level '.$_GET['level'];} ?></a>
+                <a href="#">** <?php if(!isset($_GET['level'])){ echo 'Level 1';} else{echo 'Level '.$_GET['level'];} ?> **</a>
                     <ul>
                         <li><a
                                 href="walloffame.php?tab=1&amp;type=time&amp;level=1&amp;tabbis=2&amp;typebis=tentative&amp;levelbis=<?php if(isset($levelbis)){ echo urlencode($levelbis); }else{echo $levelbis=1;}?>&amp;tabbis2=3&amp;typebis2=bestscore&amp;levelbis2=<?php if(isset($levelbis2)){echo urlencode($levelbis2); } else{echo $levelbis2=1;}?>">Level
@@ -173,17 +119,19 @@ else{
         $resultat0=mysqli_fetch_all($query0);
         //var_dump($resultat0);
         $n=1;
+        echo '<tr><td>'.''.'</td><td>'.'Pseudo'.'</td><td>'.'Moyenne TEMPS'.'</td><td>Moyenne POINTS</td></tr>';
+
         foreach($resultat0 as $ligne)
         {
             $ligne[1] = number_format($ligne[1],2);
             $ligne[2] = number_format($ligne[2],1);
-            echo '<tr><td>'.'N°'.$n.'</td><td>'.'<b>'.ucfirst($ligne[0]).'</b>'.'</td><td><b>'.$ligne[2].'</b> secondes ------- <b> '.$ligne[1].'</b> pts '.'</td></tr>';
+            echo '<tr><td>'.'N°<b>'.$n.'</b></td><td>'.'<b>'.ucfirst($ligne[0]).'</b>'.'</td><td><b> '.$ligne[2].'</b> secondes </td><td><b> '.$ligne[1].'</b> pts '.'</td></tr>';
             $n++;
         }  
        
         while($n<=10)
         {
-            echo '<tr><td>'.'N°'.$n.'</td><td>'.'<b>'.'</b>'.'</td><td><b>'.'</b> <b> '.'</b> '.'</td></tr>';
+            echo '<tr><td>'.'N°<b>'.$n.'</b></td><td>'.'<b>'.'</b>'.'</td><td><b>'.'</b> <b> '.'</b> '.'</td><td></td></tr>';
             $n++;
         }
     ?>
@@ -200,12 +148,14 @@ else{
 
 $n=1;
 ?> <table>
+    <th></th>
+
         <th>TOP 10</th>
         <th>--- " SANS-FAUTE " ---</th>
         <th>
             <ul id="menu-accordeon">
             <li>
-                <a href="#"><?php if(!isset($_GET['levelbis'])){ echo 'Level 1';} else{echo 'Level '.$_GET['levelbis'];} ?></a>
+                <a href="#">** <?php if(!isset($_GET['levelbis'])){ echo 'Level 1';} else{echo 'Level '.$_GET['levelbis'];} ?> **</a>
                     <ul>
                 <li>
                 <a
@@ -267,17 +217,19 @@ else{
     $resultat0=mysqli_fetch_all($query0);
     //var_dump($resultat0);
     $n=1;
+    echo '<tr><td>'.''.'</td><td>'.'Pseudo'.'</td><td>'.'Moyenne COUPS'.'</td><td>Moyenne POINTS</td></tr>';
+
     foreach($resultat0 as $ligne)
     {
         $ligne[1] = number_format($ligne[1],2);
         $ligne[2] = number_format($ligne[2],1);
-        echo '<tr><td>'.'N°'.$n.'</td><td>'.'<b>'.ucfirst($ligne[0]).'</b>'.'</td><td><b>'.$ligne[2].'</b> coups ------- <b> '.$ligne[1].'</b> pts '.'</td></tr>';
+        echo '<tr><td>'.'N°<b>'.$n.'</b></td><td>'.'<b>'.ucfirst($ligne[0]).'</b>'.'</td><td><b>'.$ligne[2].'</b> coups</td><td><b> '.$ligne[1].'</b> pts '.'</td></tr>';
         $n++;
     }  
    
     while($n<=10)
     {
-        echo '<tr><td>'.'N°'.$n.'</td><td>'.'<b>'.'</b>'.'</td><td><b>'.'</b> <b> '.'</b>'.'</td></tr>';
+        echo '<tr><td>'.'N°<b>'.$n.'</b></td><td>'.'<b>'.'</b>'.'</td><td><b>'.'</b> <b> '.'</b>'.'</td><td></td></tr>';
         $n++;
     }
 ?>
@@ -299,12 +251,14 @@ else{
 
 $n=1;
 ?> <table>
+    <th></th>
+
         <th>TOP 10</th>
-        <th>---BEST TOTAL SCORE---</th>
+        <th>--- " BEST TOTAL POINTS " ---</th>
         <th>
             <ul id="menu-accordeon">
             <li>
-                <a href="#"><?php if(!isset($_GET['levelbis2'])){ echo 'Level 1';} else{echo 'Level '.$_GET['levelbis2'];} ?></a>
+                <a href="#">** <?php if(!isset($_GET['levelbis2'])){ echo 'Level 1';} else{echo 'Level '.$_GET['levelbis2'];} ?> **</a>
                     <ul>
                 <li>
                 <a
@@ -354,16 +308,18 @@ $connexion=mysqli_connect('localhost','root','','memory');
     $query0=mysqli_query($connexion,$requete0);
     $resultat0=mysqli_fetch_all($query0);
     $n=1;
+    echo '<tr><td>'.''.'</td><td>'.'Pseudo'.'</td><td>'.'<b>Pts total</b> <i>Chrono</i> + <b>Pts total </b><i>Sans-faute</i>'.'</td><td>Total POINTS</td></tr>';
+
     foreach($resultat0 as $ligne)
     {
         $ligne[1] = number_format($ligne[1],2);
-        echo '<tr><td>'.'N°'.$n.'</td><td>'.'<b>'.ucfirst($ligne[0]).'</b>'.'</td><td> '.$ligne[1].'</b> pts '.'</td></tr>';
+        echo '<tr><td>'.'N°<b>'.$n.'</b></td><td>'.'<b>'.ucfirst($ligne[0]).'</b>'.'</td><td><i>Calcul</i> </td><td><b>'.$ligne[1].'</b> pts '.'</td></tr>';
         $n++;
     }  
    
     while($n<=10)
     {
-        echo '<tr><td>'.'N°'.$n.'</td><td>'.'<b>'.'</b>'.'</td><td><b>'.'</b> <b> '.'</b>'.'</td></tr>';
+        echo '<tr><td>'.'N°<b>'.$n.'</b></td><td>'.'<b>'.'</b>'.'</td><td><b>'.'</b> <b> '.'</b>'.'</td><td></td></tr>';
         $n++;
     }
 

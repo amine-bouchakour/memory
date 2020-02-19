@@ -27,11 +27,11 @@ date_default_timezone_set('Europe/Paris');
 
 $n=1;
 ?> <table>
-    <th></th>
-    <th>-- VOTRE TOP 5 PAR MODE DE JEU --</th>
+    <th>VOTRE TOP 5 </th>
+    <th>-- PAR MODE DE JEU --</th>
     <th>
         <ul id="menu-accordeon">
-            <li><a href="#"><?php if(!isset($_GET['level'])){ echo 'Level 1';} else{echo 'Level '.$_GET['level'];} ?></a>
+            <li><a href="#">** <?php if(!isset($_GET['level'])){ echo 'Level 1';} else{echo 'Level '.$_GET['level'];} ?> **</a>
                 <ul>
                     <li><a
                             href="profil.php?tab=1&amp;type=time&amp;level=1">Level
@@ -95,12 +95,12 @@ while ($n<=5){
 // $resultatlevel2[0][1];//points
 while($k<count($resultatlevel2) and $n<=5){
     
-    echo '<tr><td>'.'N°'.$n.'</td><td><b> '.ucfirst($resultatlevel2[0][0]).' -- '.$resultatlevel2[$k][2].' secondes : le '.$resultatlevel2[$k][3].' </b></td><td><b>'.$resultatlevel2[$k][1].'</b> pts '.'</td></tr>';
+    echo '<tr><td>'.'N°<b>'.$n.'</b></td><td><b> '.ucfirst($resultatlevel2[0][0]).' -- '.$resultatlevel2[$k][2].' secondes : le '.$resultatlevel2[$k][3].' </b></td><td><b>'.$resultatlevel2[$k][1].'</b> pts '.'</td></tr>';
     ++$k;
     ++$n;
 }
 if($k==count($resultatlevel2)){
-    echo '<tr><td>'.'N°'.$n.'</td><td>'.''.'</td><td>'.''.'</td></tr>';
+    echo '<tr><td>'.'N°<b>'.$n.'</b></td><td>'.''.'</td><td>'.''.'</td></tr>';
     ++$n;
 
         }
@@ -127,11 +127,11 @@ while ($n<=5){
 
 while($k<count($resultat1) and $n<=5){
     
-    echo '<tr><td>'.'N°'.$n.'</td><td><b> '.ucfirst($resultat1[0][0]).' -- '.$resultat1[$k][2].' coups : le '.$resultatlevel2[$k][3].' </b></td><td><b>'.$resultat1[$k][1].'</b> pts '.'</td></tr>';
+    echo '<tr><td>'.'N°<b>'.$n.'</b></td><td><b> '.ucfirst($resultat1[0][0]).' -- '.$resultat1[$k][2].' coups : le '.$resultatlevel2[$k][3].' </b></td><td><b>'.$resultat1[$k][1].'</b> pts '.'</td></tr>';
     ++$n;
 }
 if($k==count($resultat1)){
-    echo '<tr><td>'.'N°'.$n.'</td><td>'.''.'</td><td>'.''.'</td></tr>';
+    echo '<tr><td>'.'N°<b>'.$n.'</b></td><td>'.''.'</td><td>'.''.'</td></tr>';
     ++$n;
 
         }
