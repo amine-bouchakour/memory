@@ -158,9 +158,9 @@ class tabcarte
             $_SESSION['pointstime']= number_format($_SESSION['pointstime'],1);
             ceil($_SESSION['pointstime']);
 
-            $requete="INSERT INTO besttime (login,temps,points,level,defi,utilise,id_utilisateur,date) VALUES ('".$_SESSION['login']."','".$_SESSION['temps']."','".$_SESSION['pointstime']."','".$_SESSION['level']."','".$_SESSION['defi']."','non','".$_SESSION['id_utilisateur']."','".$_SESSION['date']."') ";
+            $requete="INSERT INTO besttime (login,temps,points,level,defi,id_utilisateur,date) VALUES ('".$_SESSION['login']."','".$_SESSION['temps']."','".$_SESSION['pointstime']."','".$_SESSION['level']."','".$_SESSION['defi']."','".$_SESSION['id_utilisateur']."','".$_SESSION['date']."') ";
             $query=mysqli_query($connexion,$requete);
-            // echo ($requete).'<br/>'; 
+            echo ($requete).'<br/>'; 
           }
 
           if($_SESSION['defi']=='Sans faute' and isset($_SESSION['login'])){
@@ -169,7 +169,7 @@ class tabcarte
             ceil($_SESSION['pointstentative']);
 
             $connexion=mysqli_connect('localhost',"root","","memory");
-            $requete1="INSERT INTO besttentative (login,nb_tentative,points,level,defi,utilise,id_utilisateur,date) VALUES ('".$_SESSION['login']."','".$_SESSION['nb_tentative']."','".$_SESSION['pointstentative']."','".$_SESSION['level']."','".$_SESSION['defi']."','non','".$_SESSION['id_utilisateur']."','".$_SESSION['date']."') ";
+            $requete1="INSERT INTO besttentative (login,nb_tentative,points,level,defi,id_utilisateur,date) VALUES ('".$_SESSION['login']."','".$_SESSION['nb_tentative']."','".$_SESSION['pointstentative']."','".$_SESSION['level']."','".$_SESSION['defi']."','".$_SESSION['id_utilisateur']."','".$_SESSION['date']."') ";
             $query1=mysqli_query($connexion,$requete1);
             // echo ($requete1).'<br/>';
   
