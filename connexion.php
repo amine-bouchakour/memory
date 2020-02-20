@@ -6,12 +6,14 @@
 <html>
 <head>
 	<title>connexion</title>
+	<link rel="stylesheet" type="text/css" href="memo.css">
 </head>
 <body>
 <?php 
 	include('header.php');
 	if(isset($_POST['conn'])&&!empty($_POST['login'])&&!empty($_POST['psw']))
 	{
+		$_POST['psw']=chiffre($_POST['psw']);
 		$res=sql("SELECT `id`,`login` FROM `utilisateurs` WHERE login = '".$_POST['login']."' AND password = '".$_POST['psw']."';");
 		if(!empty($res))
 		{
@@ -40,4 +42,4 @@
 		}
 	?>
 </body>
-</html>
+</html
